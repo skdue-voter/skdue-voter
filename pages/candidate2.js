@@ -44,8 +44,8 @@ function Candidate() {
             // TODO change key to other unique stuff
             <div
               key={index}
-              className={`card flex flex-row border rounded 
-                ${index == 4 ? "bg-yellow" : "bg-white"}
+              className={`card flex flex-row border rounded bg-white 
+                // ${index == 4 ? "font-extrabold" : ""}
                ${
                  index == 1 || index == 7
                    ? " opacity-80 w-2/5 lg:py-3 md:py-1"
@@ -74,6 +74,10 @@ function Candidate() {
             </div>
           );
         })}
+      </div>
+
+      <div className="bg-cyan-300 w-96 h-96 my-auto">
+        {/* TODO: TOUCH ADD HERE */}
       </div>
     </div>
   );
