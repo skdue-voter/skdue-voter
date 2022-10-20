@@ -76,7 +76,7 @@ function Candidate() {
         })}
       </div>
 
-      <div class="flex flex-col items-center my-auto max-w-sm bg-[#2A5DAA] rounded-md shadow-md dark:border-gray-700  w-[37.75rem] h-[41.5rem]">
+      <div class="flex flex-col items-center my-auto sm:mr-16 max-w-sm bg-[#2A5DAA] rounded-md shadow-md dark:border-gray-700  w-[37.75rem] h-[41.5rem]">
         <img
           class="rounded my-6"
           src="https://www.eng.ku.ac.th/wp-content/uploads/2020/11/32-James-Edward-Brucker.jpg"
