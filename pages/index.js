@@ -40,7 +40,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="bg-white rounded-15 w-2/3 p-1.5 border border-gray-dark h-2/3">
+        <div className="bg-white rounded-15 w-2/3 p-1.5 border border-gray-dark h-2/3 h-[27rem]">
           <h1 className="text-3xl">Donald Trump</h1>
           <img className="max-h-96 rounded" src="trump.jpg" class="img-fluid" alt="..."></img>
           <p>Make Thailand great again!</p>
@@ -48,7 +48,7 @@ function Home() {
             className="bg-gray w-32 mr-14 rounded-10 p-1 my-1 w-full text-xl font-medium hover:opacity-80"
           >Candidate</button>
           <button type="submit"
-            className="bg-yellow-lemon w-32 ml-14 rounded-10 p-1 my-1 w-full text-xl font-medium hover:opacity-80"
+            className="bg-yellow-lemon w-32 ml-40 rounded-10 p-1 my-1 w-full text-xl font-medium hover:opacity-80"
           >Vote</button>
         </div>
       </div>
