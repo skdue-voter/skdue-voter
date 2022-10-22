@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 function Candidate() {
   const [cards, setCards] = useState([
@@ -8,6 +8,29 @@ function Candidate() {
   const [displayCards, setDisplayCards] = useState([
     9, 10, 11, 12, 0, 1, 2, 3, 4,
   ]);
+
+  const [clientWindowHeight, setClientWindowHeight] = useState("");
+
+  useEffect(() => {
+    setClientWindowHeight(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
+
+  const handleScroll = (event) => {
+    let height = clientWindowHeight;
+    let _card = mainIndex;
+    setClientWindowHeight(window.scrollY);
+    if (window.scrollY > height) {
+      setMainIndex((_card + 1) % cards.length);
+      changeCards((_card + 1) % cards.length);
+      console.log((_card + 1) % cards.length);
+    } else {
+      setMainIndex(Math.abs((_card - 1) % cards.length));
+      changeCards(Math.abs((_card - 1) % cards.length));
+      console.log(Math.abs((_card - 1) % cards.length));
+    }
+  };
 
   function changeCards(index) {
     let array = [
@@ -25,7 +48,7 @@ function Candidate() {
   }
 
   return (
-    <div className="body flex h-screen ">
+    <div className="body flex h-screen " onScroll={handleScroll}>
       <a className="absolute p-6 text-yellow" href="../">
         Back
       </a>
@@ -35,26 +58,30 @@ function Candidate() {
           width="100%"
           height="100%"
         >
-          <ellipse cx="0%" cy="50%" rx="52%" ry="80%" className="fill-green" />
+          <ellipse
+            cx="-60%"
+            cy="50%"
+            rx="122%"
+            ry="80%"
+            className="fill-green"
+          />
         </svg>
       </div>
-      <div className=" outer flex flex-col justify-center w-1/2  ml-14 my-auto gap-4 ">
+      <div className=" outer flex flex-col justify-center w-1/2  ml-14 my-auto gap-4 pt-10 ">
         {displayCards.map((card, index) => {
           return (
             // TODO change key to other unique stuff
+
+            // ${index == 1 || index == 7 ? "  w-2/5 lg:py-3 md:py-1" : ""} md:py-0 md:py-2
             <div
               key={index}
-              className={`card flex flex-row border rounded bg-white  py-2 max-h-12
-                 ${index == 4 ? "font-semibold" : ""}
-               ${
-                 index == 1 || index == 7
-                   ? " opacity-80 w-2/5 lg:py-3 md:py-1"
-                   : ""
-               }
+              className={`card flex flex-row border rounded bg-white max-h-44
+                 ${index == 4 ? "font-semibold" : "opacity-60"}
+               ${index == 1 || index == 7 ? "  w-2/5 md:py-3 " : ""}
               ${
                 index == 0 || index == 8
-                  ? " w-1/3 lg:py-2 md:py-0 opacity-60"
-                  : "w-1/2 lg:py-4 md:py-2"
+                  ? " w-1/3 md:py-2 "
+                  : "w-1/2 md:py-5 2xl:py-3 "
               } `}
               onClick={(e) => {
                 setMainIndex(card);
