@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 function Candidate() {
   const [cards, setCards] = useState([
@@ -8,6 +8,29 @@ function Candidate() {
   const [displayCards, setDisplayCards] = useState([
     9, 10, 11, 12, 0, 1, 2, 3, 4,
   ]);
+
+  const [clientWindowHeight, setClientWindowHeight] = useState("");
+
+  useEffect(() => {
+    setClientWindowHeight(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
+
+  const handleScroll = (event) => {
+    let height = clientWindowHeight;
+    let _card = mainIndex;
+    setClientWindowHeight(window.scrollY);
+    if (window.scrollY > height) {
+      setMainIndex((_card + 1) % cards.length);
+      changeCards((_card + 1) % cards.length);
+      console.log((_card + 1) % cards.length);
+    } else {
+      setMainIndex(Math.abs((_card - 1) % cards.length));
+      changeCards(Math.abs((_card - 1) % cards.length));
+      console.log(Math.abs((_card - 1) % cards.length));
+    }
+  };
 
   function changeCards(index) {
     let array = [
@@ -25,7 +48,7 @@ function Candidate() {
   }
 
   return (
-    <div className="body flex h-screen ">
+    <div className="body flex h-screen " onScroll={handleScroll}>
       <a className="absolute p-6 text-yellow" href="../">
         Back
       </a>
@@ -44,7 +67,7 @@ function Candidate() {
           />
         </svg>
       </div>
-      <div className=" outer flex flex-col justify-center w-1/2  ml-14 my-auto gap-4 pt-10">
+      <div className=" outer flex flex-col justify-center w-1/2  ml-14 my-auto gap-4 pt-10 ">
         {displayCards.map((card, index) => {
           return (
             // TODO change key to other unique stuff
