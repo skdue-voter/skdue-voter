@@ -35,26 +35,30 @@ function Candidate() {
           width="100%"
           height="100%"
         >
-          <ellipse cx="0%" cy="50%" rx="52%" ry="80%" className="fill-green" />
+          <ellipse
+            cx="-60%"
+            cy="50%"
+            rx="122%"
+            ry="80%"
+            className="fill-green"
+          />
         </svg>
       </div>
-      <div className=" outer flex flex-col justify-center w-1/2  ml-14 my-auto gap-4 ">
+      <div className=" outer flex flex-col justify-center w-1/2  ml-14 my-auto gap-4 pt-10">
         {displayCards.map((card, index) => {
           return (
             // TODO change key to other unique stuff
+
+            // ${index == 1 || index == 7 ? "  w-2/5 lg:py-3 md:py-1" : ""} md:py-0 md:py-2
             <div
               key={index}
-              className={`card flex flex-row border rounded bg-white  py-2 max-h-12
-                 ${index == 4 ? "font-semibold" : ""}
-               ${
-                 index == 1 || index == 7
-                   ? " opacity-80 w-2/5 lg:py-3 md:py-1"
-                   : ""
-               }
+              className={`card flex flex-row border rounded bg-white max-h-44
+                 ${index == 4 ? "font-semibold" : "opacity-60"}
+               ${index == 1 || index == 7 ? "  w-2/5 md:py-3 " : ""}
               ${
                 index == 0 || index == 8
-                  ? " w-1/3 lg:py-2 md:py-0 opacity-60"
-                  : "w-1/2 lg:py-4 md:py-2"
+                  ? " w-1/3 md:py-2 "
+                  : "w-1/2 md:py-5 2xl:py-3 "
               } `}
               onClick={(e) => {
                 setMainIndex(card);
