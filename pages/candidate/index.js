@@ -78,7 +78,7 @@ function Candidate() {
           {" "}
           &#60;Election&#62; Candidate
         </h1>
-        <div class=" flex flex-col items-center mt-4 mb-auto max-w-sm bg-[#2A5DAA] rounded-md shadow-md dark:border-gray-700  w-[37.75rem]  h-[41.5rem]  md:w-[32.75rem]  md:h-[36.5rem]  ">
+        <div class=" flex flex-col items-center mt-4 mb-auto max-w-sm bg-[#2A5DAA] rounded-md shadow-md dark:border-gray-700  w-[37.75rem]  h-[41.5rem]  md:w-[32.75rem]  md:h-[38.5rem]  ">
           <img
             class="rounded my-6"
             src="https://www.eng.ku.ac.th/wp-content/uploads/2020/11/32-James-Edward-Brucker.jpg"
@@ -88,6 +88,9 @@ function Candidate() {
           <div class="p-5 flex flex-col items-center -my-8">
             <p class="mb-2 text-2xl font-bold tracking-tight text-[#fff] dark:text-white w-[300px] flex justify-center">
               James Edward Brucker
+            </p>
+            <p class="mb-2 text-1xl font-bold tracking-tight text-[#fff] dark:text-white w-[300px] flex justify-center">
+              SKEKILLER
             </p>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 w-[22rem] h-[12.5rem] md:text-sm md:w-9/10 md:h-32 bg-[#fff] rounded-md my-2">
               ตำแหน่งทางวิชาการ: Software Engineering Specialist การศึกษา: Ph.D
