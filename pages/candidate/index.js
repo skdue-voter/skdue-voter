@@ -45,7 +45,7 @@ function Candidate() {
       <a className="absolute p-4 text-yellow" href="../">
         Back
       </a>
-      <div className="absolute top-0 w-1/4 mt-0 h-full -z-10 bg-green">
+      <div className="absolute top-0 w-[22rem] sm:1/5 mt-0 h-full -z-10 bg-green">
         <svg
           className="ml-36 xl:ml-50 lg:ml-60 md:ml-48 sm:ml-40  "
           width="100%"
@@ -125,14 +125,14 @@ function Candidate() {
           );
         })}
       </div>
-      <div className="flex flex-col items-center ">
+      <div className="flex flex-col items-center justify-center overflow-auto ">
         <h1 className="pt-6 pb-0 md:text-[22px] lg:text-[36px] ">
           {" "}
           &#60;Election&#62; Candidate
         </h1>
-        <div class="flex flex-col items-center bg-party-blue  rounded-15  mb-2 ">
+        <div class="flex flex-col items-center bg-party-blue  rounded-15  mb-2 pb-2 ">
           <img
-            class="rounded-10 p-2 lg:w-[360px] "
+            class="rounded-15 p-2 lg:w-[360px] "
             src="https://www.eng.ku.ac.th/wp-content/uploads/2020/11/32-James-Edward-Brucker.jpg"
           />
           <div class="flex flex-col items-center ">
