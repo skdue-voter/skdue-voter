@@ -93,10 +93,7 @@ function Candidate() {
                   : "md:py-5"
               }
               ${
-                card == main - 1 ||
-                card == main - 2 ||
-                card == main + 1 ||
-                card == main + 2
+                index == 2 || index == 3 || index == 5 || index == 6
                   ? " w-[45%]"
                   : ""
               }
