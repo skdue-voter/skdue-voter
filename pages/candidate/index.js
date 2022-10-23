@@ -76,9 +76,8 @@ function Candidate() {
         {displayCards.map((card, index) => {
           let main = mainIndex;
           return (
-            <div className="flex flex-row gap-5 ">
+            <div key={index} className="flex flex-row gap-5 ">
               <div
-                key={index}
                 className={`card flex flex-row border rounded bg-white max-h-44  
               ${card == null ? "opacity-0" : ""}
                  ${index == 4 ? "font-semibold w-1/2 md:py-5" : "opacity-60"}
@@ -94,7 +93,7 @@ function Candidate() {
               }
               ${
                 index == 2 || index == 3 || index == 5 || index == 6
-                  ? " w-[45%]"
+                  ? "w-[45%]"
                   : ""
               }
               
