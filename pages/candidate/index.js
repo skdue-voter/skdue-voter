@@ -42,7 +42,7 @@ function Candidate() {
 
   return (
     <div className="body flex h-screen ">
-      <a className="absolute p-6 text-yellow" href="../">
+      <a className="absolute p-4 text-yellow" href="../">
         Back
       </a>
       <div className="absolute top-0 w-1/4 mt-0 h-full -z-10 bg-green">
@@ -71,7 +71,7 @@ function Candidate() {
         //     changeCards(Math.min(len, _index++));
         //   }
         // }}
-        className=" outer flex flex-col justify-center w-1/2 h-[85%] ml-14 my-auto gap-4  overflow-y-scroll"
+        className=" outer flex flex-col justify-center w-1/2 h-[90%] ml-14 my-auto gap-4  overflow-y-scroll"
       >
         {displayCards.map((card, index) => {
           let main = mainIndex;
@@ -79,7 +79,7 @@ function Candidate() {
             <div key={index} className="flex flex-row gap-5 ">
               <div
                 className={`card flex flex-row border rounded bg-white max-h-44  
-              ${card == null ? "opacity-0" : ""}
+              ${card == null ? "invisible" : ""}
                  ${index == 4 ? "font-semibold w-1/2 md:py-5" : "opacity-60"}
                ${
                  (index == 1 || index == 7) && card != main
@@ -93,7 +93,7 @@ function Candidate() {
               }
               ${
                 index == 2 || index == 3 || index == 5 || index == 6
-                  ? "w-[45%]"
+                  ? "w-[45%]  md:py-4"
                   : ""
               }
               
@@ -130,19 +130,19 @@ function Candidate() {
           {" "}
           &#60;Election&#62; Candidate
         </h1>
-        <div class="flex flex-col items-center bg-party-blue rounded-15 max-h-[80%]">
+        <div class="flex flex-col items-center bg-party-blue  rounded-15  mb-2 ">
           <img
-            class="rounded-10 p-2 w-[360px] max-w-[360px]"
+            class="rounded-10 p-2 lg:w-[360px] "
             src="https://www.eng.ku.ac.th/wp-content/uploads/2020/11/32-James-Edward-Brucker.jpg"
           />
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center ">
             <p class="text-2xl font-bold text-white dark:text-white flex justify-center">
               James Edward Brucker
             </p>
-            <p class="text-1xl text-white dark:text-white flex justify-center">
+            <p class="text-1xl text-white dark:text-white flex justify-center ">
               SKEKILLER
             </p>
-            <p class="p-2 font-normal md:text-sm bg-white rounded-10 w-[21.5rem] mb-2 overflow-y-auto">
+            <p class="p-2 font-normal md:text-sm bg-white rounded-10 w-[21.5rem]">
               ตำแหน่งทางวิชาการ: Software Engineering Specialist การศึกษา: Ph.D
               ( Electrical Engineering ), University of California , 1986 M.A (
               Mathematics ), University of Hawaii , 1981 M.A ( Statistics ),
