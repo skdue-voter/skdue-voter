@@ -3,6 +3,13 @@ import axios from "axios";
 
 const Vote = () => {
   const [inputs, setInputs] = useState({});
+  const [displayButtons, setDisplayButton] = useState([
+    1, 2, 3, 4, 5, 6, 7, 
+    8, 9, 10, 11, 12, 13, 14,
+    15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26, 27, 28,
+    29, 30, 31, 32, 33, 34, 35
+    ])
 
   useEffect(() => {
     let user = JSON.parse(sessionStorage.getItem("user"));
@@ -26,11 +33,19 @@ const Vote = () => {
         <svg width="100%">
             <ellipse cx="50%" cy="32%" rx="52%" ry="60%" className="fill-green" />
         </svg>
-        <div>
-
+        <div className="flex flex-col w-1/2">
+            <div className="grid grid-cols-7 gap-4 place-items-stretch h-56">
+                {displayButtons.map((card, index) => {
+                    return (
+                        <button className="m-3 bg-gray hover:bg-gray-dark rounded text-black py-8 px-8">
+                            {card}
+                        </button>
+                    );
+                })}
+            </div>
         </div>
-        <div>
-            <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center">
+            <div className="mx-1.5">
                 <div class="m-3 flex flex-col items-center mt-4 mb-auto max-w-sm bg-[#2A5DAA] rounded-md shadow-md dark:border-gray-700  w-[37.75rem]  h-[41.5rem]  md:w-[32.75rem]  md:h-[30.5rem] ">
                     <img
                         class="rounded my-6"
@@ -46,15 +61,15 @@ const Vote = () => {
                         SKEKILLER
                         </p>
                     </div>
+                    <button class="m-8 bg-gray hover:bg-gray-dark text-black font-bold py-4 px-4 rounded md:w-[23.85rem]  md:h-[5rem] ">
+                        Vote No
+                    </button>
+                    <button class="-m-6 bg-party-red hover:bg-red text-white font-bold py-4 px-4 rounded md:w-[23.85rem]  md:h-[5rem] ">
+                        Confirm
+                    </button>
                 </div>
-                <button class="m-3 bg-gray hover:bg-gray-dark text-black font-bold py-2 px-4 rounded md:w-[23.85rem]  md:h-[5rem] ">
-                    Vote No
-                </button>
-                <button class="-m-0.5 bg-yellow-lemon hover:bg-yellow text-black font-bold py-2 px-4 rounded md:w-[23.85rem]  md:h-[5rem] ">
-                    Confirm
-                </button>
             </div>
-      </div>
+        </div>
     </div>
   );
 
