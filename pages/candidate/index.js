@@ -78,22 +78,26 @@ function Candidate() {
           return (
             <div key={index} className="flex flex-row gap-5 ">
               <div
-                className={`card flex flex-row border rounded bg-white max-h-44  
+                className={`card flex flex-row border rounded bg-white max-h-44 
               ${card == null ? "invisible" : ""}
-                 ${index == 4 ? "font-semibold w-1/2 md:py-5" : "opacity-60"}
+                 ${
+                   index == 4
+                     ? "font-semibold w-1/2 max-w-[22rem] md:py-5"
+                     : "opacity-60 "
+                 }
                ${
                  (index == 1 || index == 7) && card != main
-                   ? "  w-2/5 md:py-3 "
+                   ? "  w-2/5 md:py-3 max-w-[18çrem]"
                    : ""
                }
               ${
                 (index == 0 || index == 8) && card != main
-                  ? " w-1/3 md:py-2 "
+                  ? " w-1/3 md:py-2 max-w-[16rem]"
                   : "md:py-5"
               }
               ${
                 index == 2 || index == 3 || index == 5 || index == 6
-                  ? "w-[45%]  md:py-4"
+                  ? "w-[45%]  md:py-4 max-w-[20rem]"
                   : ""
               }
               
