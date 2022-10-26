@@ -33,7 +33,7 @@ const Vote = () => {
         <svg width="100%">
             <ellipse cx="50%" cy="32%" rx="52%" ry="60%" className="fill-green" />
         </svg>
-        <div className="flex flex-col w-1/2">
+        <div className="my-6 mx-20 w-1/2">
             <div className="grid grid-cols-7 gap-4 place-items-stretch h-56">
                 {displayButtons.map((card, index) => {
                     return (
@@ -44,7 +44,7 @@ const Vote = () => {
                 })}
             </div>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="-my-60 mx-[1000px]">
             <div className="mx-1.5">
                 <div class="m-3 flex flex-col items-center mt-4 mb-auto max-w-sm bg-[#2A5DAA] rounded-md shadow-md dark:border-gray-700  w-[37.75rem]  h-[41.5rem]  md:w-[32.75rem]  md:h-[30.5rem] ">
                     <img
