@@ -87,7 +87,7 @@ function Candidate() {
                  }
                ${
                  (index == 1 || index == 7) && card != main
-                   ? "  w-2/5 md:py-3 max-w-[18çrem]"
+                   ? "  w-2/5 md:py-3 max-w-[18rem]"
                    : ""
                }
               ${
