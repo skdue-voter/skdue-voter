@@ -28,7 +28,7 @@ const Login = () => {
 
   async function handleLogin(event) {
     event.preventDefault();
-    alert(JSON.stringify(inputs));
+    // alert(JSON.stringify(inputs));
     await axios.post(`http://127.0.0.1:8000/login/`, inputs)
       .then((response) => {
         login(response.data);
