@@ -44,9 +44,9 @@ const Vote = () => {
                 })}
             </div>
         </div>
-        <div className="-my-60 mx-[1000px]">
+        <div className="-my-60 mx-[1100px]">
             <div className="mx-1.5">
-                <div class="m-3 flex flex-col items-center mt-4 mb-auto max-w-sm bg-[#2A5DAA] rounded-md shadow-md dark:border-gray-700  w-[37.75rem]  h-[41.5rem]  md:w-[32.75rem]  md:h-[30.5rem] ">
+                <div class="m-3 flex flex-col items-center mt-4 mb-auto max-w-sm bg-[#2A5DAA] rounded-md shadow-md dark:border-gray-700  w-[40.75rem]  h-[41.5rem]  md:w-[32.75rem]  md:h-[30.5rem] ">
                     <img
                         class="rounded my-6"
                         src="https://www.eng.ku.ac.th/wp-content/uploads/2020/11/32-James-Edward-Brucker.jpg"
