@@ -134,9 +134,9 @@ function Candidate() {
           {" "}
           &#60;Election&#62; Party-List
         </h1>
-        <div class="grid grid-cols-2 grid-rows-2 bg-party-blue rounded-15 mb-2 pb-2 pt-2 pr-2">
+        <div class="grid grid-cols-2 gap-2 grid-rows-2 bg-party-blue rounded-15 mb-2 pb-2 pt-2 pr-2">
           <img
-            class="rounded-15 pl-2 lg:w-[360px] lg:h-[360px] col-start-1 col-end-1"
+            class="rounded-15 pl-2 lg:w-[300px] lg:h-[300px] col-start-1 col-end-1"
             src="https://www.eng.ku.ac.th/wp-content/uploads/2020/11/32-James-Edward-Brucker.jpg"
           />
           <p class="font-normal md:text-sm bg-white rounded-10 col-start-2 row-start-1 row-end-3">
@@ -146,7 +146,7 @@ function Candidate() {
             <p class="text-2xl font-bold text-white dark:text-white col-start-1 flex justify-center pb-2">
               SKEKILLER
             </p>
-            <p class="px-2 font-normal md:text-sm bg-white rounded-10 lg:w-[360px] lg:h-[360px] col-start-1 row-start-3">
+            <p class="font-normal md:text-sm bg-white rounded-10 lg:w-[300px] lg:h-[300px] col-start-1 col-end-1 row-start-3">
               ตำแหน่งทางวิชาการ: Software Engineering Specialist การศึกษา: Ph.D
               ( Electrical Engineering ), University of California , 1986 M.A (
               Mathematics ), University of Hawaii , 1981 M.A ( Statistics ),
