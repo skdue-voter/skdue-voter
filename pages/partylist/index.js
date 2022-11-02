@@ -130,9 +130,9 @@ function Candidate() {
         })}
       </div>
       <div className="flex flex-col justify-center overflow-auto ">
-        <h1 className="pt-6 pb-0 md:text-[22px] lg:text-[36px] ">
+        <h1 className="pt-6 pb-0 md:text-[22px] lg:text-[36px] flex justify-center">
           {" "}
-          &#60;Election&#62; Candidate
+          &#60;Election&#62; Party-List
         </h1>
         <div class="grid grid-cols-2 grid-rows-2 bg-party-blue rounded-15 mb-2 pb-2 pt-2 pr-2">
           <img
