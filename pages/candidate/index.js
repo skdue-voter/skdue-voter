@@ -147,10 +147,14 @@ function Candidate() {
           <img class="rounded-15 p-2 lg:w-[360px] " src={mainInfo?.image} />
           <div className="flex flex-col items-center ">
             <p className="text-2xl font-bold text-white dark:text-white flex justify-center">
-              James Edward Brucker
+              {mainInfo?.id +
+                " " +
+                mainInfo?.user?.first_name +
+                " " +
+                mainInfo?.user?.last_name}
             </p>
             <p className="text-1xl text-white dark:text-white flex justify-center ">
-              SKEKILLER
+              {mainInfo?.area.name}
             </p>
             <p class="p-2 font-normal md:text-sm bg-white rounded-10 w-[21.5rem]">
               {mainInfo?.description}
