@@ -19,8 +19,8 @@ module.exports = {
         'party-orange': '#EE7421',
       },
       borderRadius: {
-        '10': '10px',
-        '15': '15px',
+        10: "10px",
+        15: "15px",
       },
     },
   },
