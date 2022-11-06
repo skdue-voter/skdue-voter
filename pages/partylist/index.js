@@ -1,4 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
+import axios from 'axios';
+
+async function fetchData(){
+  const res = await fetch(`https://sankasaint.helloyeew.dev/api/candidate`)
+  const data = await res.json()
+  console.log(data)
+}
 
 function Candidate() {
   const [cards, setCards] = useState([
@@ -23,6 +30,10 @@ function Candidate() {
     setLen(cards.length);
     console.log("set length", len);
   }, [cards]);
+
+  useEffect(() => {
+    fetchData()
+  })
 
   function changeCards(index) {
     let array = [
@@ -114,7 +125,7 @@ function Candidate() {
                     index == 0 || index == 8 ? "sm:text-sm lg:text-md" : ""
                   }`}
                 >
-                  Patkamon Awaiwanont{" "}
+                  {" "}
                 </p>
               </div>
               <div
@@ -146,7 +157,7 @@ function Candidate() {
             <p class="text-2xl font-bold text-white dark:text-white col-start-1 flex justify-center pb-2">
               SKEKILLER
             </p>
-            <p class="font-normal md:text-sm bg-white rounded-10 lg:w-[300px] lg:h-[300px] col-start-1 col-end-1 row-start-3">
+            <p class="font-normal md:text-sm text-white rounded-10 lg:w-[300px] lg:h-[300px] col-start-1 col-end-1 row-start-3">
               ตำแหน่งทางวิชาการ: Software Engineering Specialist การศึกษา: Ph.D
               ( Electrical Engineering ), University of California , 1986 M.A (
               Mathematics ), University of Hawaii , 1981 M.A ( Statistics ),
