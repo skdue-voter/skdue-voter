@@ -17,9 +17,11 @@ function Candidate() {
     tryGet();
   }, []);
 
-  async function isLogin(data) {
+  async function isLogin() {
     axios
-      .get(`https://sankasaint.helloyeew.dev/api/profile`)
+      .get(`https://sankasaint.helloyeew.dev/api/profile`, {
+        withCredentials: true,
+      })
       .then((res) => {
         console.log(res);
       })

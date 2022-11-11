@@ -54,7 +54,9 @@ const Login = () => {
     alert(JSON.stringify(inputs));
     console.log(inputs);
     await axios
-      .post(`https://sankasaint.helloyeew.dev/api/login`, inputs)
+      .post(`https://sankasaint.helloyeew.dev/api/login`, inputs, {
+        withCredentials: true,
+      })
       .then((response) => {
         login(response.data);
       })
