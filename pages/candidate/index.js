@@ -17,6 +17,19 @@ function Candidate() {
     tryGet();
   }, []);
 
+  async function isLogin(data) {
+    axios
+      .get(`https://sankasaint.helloyeew.dev/api/profile`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    // handleRedirect();
+  }
+
   async function tryGet() {
     axios
       .get(`https://sankasaint.helloyeew.dev/api/candidate`)
@@ -63,6 +76,9 @@ function Candidate() {
       <a className="absolute p-4 text-yellow" href="../">
         Back
       </a>
+      <div className="absolute p-8 text-yellow" onClick={(e) => isLogin()}>
+        isLogin
+      </div>
       <div className="absolute top-0 w-[22rem] sm:1/5 mt-0 h-full -z-10 bg-green">
         <svg
           className="ml-36 xl:ml-50 lg:ml-60 md:ml-48 sm:ml-40  "
