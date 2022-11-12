@@ -42,14 +42,14 @@ const Login = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="bg-green w-full">
-        <div className="flex place-content-around place-items-center pt-12 pb-8 px-72">
+        <div className="flex place-content-around place-items-center pt-12 pb-8 lg:px-72">
           <img className="max-h-8 px-4" src={"./logoSkdue.png"} alt="logoSkdue" />
           <img className="max-h-28 px-4" src={"./logoSankasaint.png"}  alt="logoSankasaint" />
           <img className="max-h-28 px-4" src={"./logoCatnip.png"} alt="logoCatnip" />
         </div>
         <h1 className="text-5xl font-medium text-white text-center py-4">Voting System</h1>
       </div>
-      <svg width="100%">
+      <svg width="100%" height="100">
         <ellipse cx="50%" cy="0%" rx="52%" ry="80%" className="fill-green" />
       </svg>
 
