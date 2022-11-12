@@ -1,28 +1,47 @@
 import React, { useCallback, useEffect, useState } from "react";
+import axios from 'axios';
 
 function Candidate() {
-  const [cards, setCards] = useState([
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-  ]);
+  const [cards, setCards] = useState([]);
   const [len, setLen] = useState(cards.length);
 
   const [mainIndex, setMainIndex] = useState(0);
-  const [displayCards, setDisplayCards] = useState([
-    null,
-    null,
-    null,
-    null,
-    0,
-    1,
-    2,
-    3,
-    4,
-  ]);
+  const [mainInfo, setMainInfo] = useState();
+  const [displayCards, setDisplayCards] = useState([]);
 
   useEffect(() => {
     setLen(cards.length);
-    console.log("set length", len);
+    // console.log("set length", len);
   }, [cards]);
+
+  useEffect(() => {
+    tryGet();
+  }, []);
+
+  async function tryGet() {
+    axios
+      .get(`https://sankasaint.helloyeew.dev/api/party`)
+      .then((res) => {
+        console.log(res.data.party);
+        let data = res.data.party;
+        setCards(data);
+        setDisplayCards([
+          null,
+          null,
+          null,
+          null,
+          data[0],
+          data[1],
+          data[2],
+          data[3],
+          data[4],
+        ]);
+        setMainInfo(data[0]);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   function changeCards(index) {
     let array = [
@@ -36,7 +55,7 @@ function Candidate() {
       index + 3 < len ? cards[index + 3] : null,
       index + 4 < len ? cards[index + 4] : null,
     ];
-
+    setMainInfo(cards[index])
     setDisplayCards(array);
   }
 
@@ -60,20 +79,27 @@ function Candidate() {
           />
         </svg>
       </div>
-      <div
-        // onWheel={(event) => {
-        //   let _index = mainIndex;
-        //   if (event.nativeEvent.wheelDelta > 0) {
-        //     setMainIndex(Math.max(0, _index--));
-        //     changeCards(Math.max(0, _index--));
-        //   } else {
-        //     setMainIndex(Math.min(len, _index++));
-        //     changeCards(Math.min(len, _index++));
-        //   }
-        // }}
-        className=" outer flex flex-col justify-center w-1/2 h-[90%] ml-14 my-auto gap-4  overflow-y-scroll"
-      >
+      <a className="absolute p-4 text-yellow" href="../">
+        Back
+      </a>
+      <div className="absolute top-0 w-[22rem] sm:1/5 mt-0 h-full -z-10 bg-green">
+        <svg
+          className="ml-36 xl:ml-50 lg:ml-60 md:ml-48 sm:ml-40  "
+          width="100%"
+          height="100%"
+        >
+          <ellipse
+            cx="-60%"
+            cy="50%"
+            rx="122%"
+            ry="80%"
+            className="fill-green"
+          />
+        </svg>
+      </div>
+      <div className=" outer flex flex-col justify-center w-1/2 h-[90%] ml-14 my-auto gap-4  overflow-y-scroll">
         {displayCards.map((card, index) => {
+          let id = card != null ? card.id : null;
           let main = mainIndex;
           return (
             <div key={index} className="flex flex-row gap-5 ">
@@ -103,23 +129,25 @@ function Candidate() {
               
               `}
                 onClick={(e) => {
-                  console.log("card", card);
-                  setMainIndex(card);
-                  changeCards(card);
+                  console.log("card", id - 1);
+                  setMainIndex(id - 1);
+                  changeCards(id - 1);
                 }}
               >
-                <span className="name ml-3">{card + ")"}</span>
+                <span className="name ml-3">{id + ")"}</span>
                 <p
                   className={`${
                     index == 0 || index == 8 ? "sm:text-sm lg:text-md" : ""
                   }`}
                 >
-                  Patkamon Awaiwanont{" "}
+                  {card == null
+                    ? null
+                    : card.name + " "}
                 </p>
               </div>
               <div
                 className={`my-auto  ${
-                  card != main ? "opacity-0" : ""
+                  id - 1 != main ? "opacity-0" : ""
                 } text-white font-medium text-3xl`}
               >
                 {" "}
@@ -129,29 +157,25 @@ function Candidate() {
           );
         })}
       </div>
-      <div className="flex flex-col items-center justify-center overflow-auto ">
-        <h1 className="pt-6 pb-0 md:text-[22px] lg:text-[36px] ">
+      <div className="flex flex-col justify-center overflow-auto ">
+        <h1 className="pt-6 pb-0 md:text-[22px] lg:text-[36px] flex justify-center">
           {" "}
-          &#60;Election&#62; Candidate
+          &#60;Election&#62; Party-List
         </h1>
-        <div class="flex flex-col items-center bg-party-blue  rounded-15  mb-2 pb-2 ">
+        <div class="grid grid-cols-2 gap-2 grid-rows-2 bg-party-blue rounded-15 mb-2 pb-2 pt-2 pr-2">
           <img
-            class="rounded-15 p-2 lg:w-[360px] "
-            src="https://www.eng.ku.ac.th/wp-content/uploads/2020/11/32-James-Edward-Brucker.jpg"
+            class="rounded-15 pl-2 lg:w-[300px] lg:h-[300px] col-start-1 col-end-1"
+            src={ mainInfo?.image }
           />
-          <div class="flex flex-col items-center ">
-            <p class="text-2xl font-bold text-white dark:text-white flex justify-center">
-              James Edward Brucker
+          <p class="font-normal md:text-sm bg-white lg:w-[320px] rounded-10 col-start-2 row-start-1 row-end-3">
+            { mainInfo?.description }
+          </p>
+          <div class="px-2 pb-3 -my-3">
+            <p class="text-2xl font-bold text-white dark:text-white col-start-1 flex justify-center pb-2">
+              { mainInfo?.name }
             </p>
-            <p class="text-1xl text-white dark:text-white flex justify-center ">
-              SKEKILLER
-            </p>
-            <p class="p-2 font-normal md:text-sm bg-white rounded-10 w-[21.5rem]">
-              ตำแหน่งทางวิชาการ: Software Engineering Specialist การศึกษา: Ph.D
-              ( Electrical Engineering ), University of California , 1986 M.A (
-              Mathematics ), University of Hawaii , 1981 M.A ( Statistics ),
-              University of California , 1978 B.A. ( Mathematics), Johns Hopkins
-              University, 1977
+            <p class="font-normal md:text-sm text-white rounded-10 lg:w-[300px] lg:h-[300px] col-start-1 col-end-1 row-start-3">
+              { mainInfo?.description }
             </p>
           </div>
         </div>
