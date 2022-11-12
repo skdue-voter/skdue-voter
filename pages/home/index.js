@@ -59,7 +59,7 @@ function Home() {
           </div>
           <hr className="my-3 h-px bg-gray border-0" />
 
-          <p className="text-red mb-1 text-center">Only Voted for Candidate</p>
+          <p className="text-red mb-1 text-center font-medium">Only Voted for Candidate</p>
           <div className="m-1">
           <button type="submit" onClick={() => {handleVote()}}
             className="text-white bg-red rounded-md p-3 w-full text-xl font-medium hover:brightness-90"

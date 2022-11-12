@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from 'axios';
 
-function Candidate() {
+function PartyList() {
   const [cards, setCards] = useState([]);
   const [len, setLen] = useState(cards.length);
 
@@ -144,7 +144,7 @@ function Candidate() {
       </div>
       <div className="flex flex-col items-center justify-center overflow-auto">
         <h1 className="pb-10 text-5xl font-semibold margin-auto"> Party</h1>
-        <div class="bg-party-blue rounded-lg text-white margin-auto grid grid-cols-3 grid-rows-2 w-[900px] h-[600px] p-2">
+        <div class="bg-party-blue rounded-lg text-white margin-auto grid grid-cols-3 grid-rows-2 w-[1000px] h-[700px] p-2">
           <img class="rounded-md h-full m-auto"
             src={ mainInfo?.image }
           />
@@ -165,4 +165,4 @@ function Candidate() {
   );
 }
 
-export default Candidate;
+export default PartyList;

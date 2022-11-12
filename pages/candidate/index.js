@@ -141,7 +141,7 @@ function Candidate() {
           <p class="text-2xl font-bold dark:text-white text-center pt-2">
             James Edward Brucker
           </p>
-          <p class="text-1xl dark:text-white text-center pb-2">
+          <p class="text-xl dark:text-white text-center pb-2">
             SKEKILLER
           </p>
           <p class="p-2 text-sm bg-white text-black rounded-md">
