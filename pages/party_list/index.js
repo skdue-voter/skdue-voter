@@ -90,7 +90,7 @@ function PartyList() {
           return (
             <div key={index} className="flex flex-row gap-5 ml-8">
               <div
-                className={`card flex flex-row rounded-md bg-white max-h-44 
+                className={`card flex flex-row rounded-md bg-white max-h-44 cursor-pointer
               ${card == null ? "invisible" : ""}
                  ${
                    index == 4
