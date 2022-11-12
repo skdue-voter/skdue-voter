@@ -9,18 +9,9 @@ const Login = () => {
     if (user) {
       handleRedirect();
     }
-    // if (getCookie("csrftoken")) {
-    //   handleRedirect;
-    // }
+  
   }, []);
 
-  function getCookie(name) {
-    var match = document.cookie.match(
-      RegExp("(?:^|;\\s*)" + name + "=([^;]*)")
-    );
-    console.log(match);
-    return match ? match[1] : null;
-  }
 
   const handleChange = (event) => {
     const name = event.target.name;

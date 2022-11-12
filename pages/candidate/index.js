@@ -32,6 +32,26 @@ function Candidate() {
     // handleRedirect();
   }
 
+  function logout() {
+    axios
+      .post(
+        `https://sankasaint.helloyeew.dev/api/logout`
+        // , {git withCredentials: true,}
+      )
+      .then((res) => {
+        console.log("logout success", res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // handleRedirect();
+  }
+
+  function handleRedirect() {
+    sessionStorage.removeItem("user");
+    return window.location.replace("/");
+  }
+
   async function tryGet() {
     axios
       .get(`https://sankasaint.helloyeew.dev/api/candidate`)
@@ -78,9 +98,18 @@ function Candidate() {
       <a className="absolute p-4 text-yellow" href="../">
         Back
       </a>
-      <div className="absolute p-8 text-yellow" onClick={(e) => isLogin()}>
-        isLogin
-      </div>
+      <button
+        className="absolute p-4 top-0 right-44 text-yellow"
+        onClick={(e) => isLogin()}
+      >
+        Logout
+      </button>
+      <button
+        className="absolute p-4 top-0 right-0 text-yellow"
+        onClick={(e) => logout()}
+      >
+        Logout
+      </button>
       <div className="absolute top-0 w-[22rem] sm:1/5 mt-0 h-full -z-10 bg-green">
         <svg
           className="ml-36 xl:ml-50 lg:ml-60 md:ml-48 sm:ml-40  "
