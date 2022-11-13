@@ -33,6 +33,7 @@ function Candidate() {
   }
 
   function logout() {
+    alert("not working right now");
     axios
       .post(`https://sankasaint.helloyeew.dev/api/logout`, null, {
         withCredentials: true,
@@ -97,12 +98,12 @@ function Candidate() {
       <a className="absolute p-4 text-yellow" href="../">
         Back
       </a>
-      <button
+      {/* <button
         className="absolute p-4 top-0 right-44 text-yellow"
         onClick={(e) => isLogin()}
       >
         Logout
-      </button>
+      </button> */}
       <button
         className="absolute p-4 top-0 right-0 text-yellow"
         onClick={(e) => logout()}

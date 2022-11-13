@@ -9,9 +9,7 @@ const Login = () => {
     if (user) {
       handleRedirect();
     }
-  
   }, []);
-
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -24,20 +22,11 @@ const Login = () => {
 
   async function login(data) {
     sessionStorage.setItem("user", JSON.stringify(data));
-    // axios
-    //   .get(`https://sankasaint.helloyeew.dev/api/profile`)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //   });
-
-    // handleRedirect();
+    handleRedirect();
   }
 
   function handleRedirect() {
-    return window.location.replace("/hom");
+    return window.location.replace("/home");
   }
 
   async function handleLogin(event) {
