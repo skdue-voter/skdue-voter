@@ -5,8 +5,8 @@ const Login = () => {
   const [inputs, setInputs] = useState({});
 
   useEffect(() => {
-    let user = JSON.parse(sessionStorage.getItem("user"));
-    if (user) {
+    let userData = JSON.parse(sessionStorage.getItem("userData"));
+    if (userData) {
       handleRedirect();
     }
   }, []);
@@ -18,7 +18,7 @@ const Login = () => {
   };
 
   async function login(data) {
-    sessionStorage.setItem("user", JSON.stringify(data));
+    sessionStorage.setItem("userData", JSON.stringify(data));
     handleRedirect();
   }
 

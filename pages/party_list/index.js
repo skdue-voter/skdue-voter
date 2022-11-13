@@ -154,18 +154,18 @@ function PartyList() {
           );
         })}
       </div>
-      <div className="flex flex-col items-center justify-center overflow-auto">
-        <h1 className="pb-10 text-5xl font-semibold margin-auto"> Party</h1>
-        <div class="bg-party-blue rounded-lg text-white margin-auto grid grid-cols-3 grid-rows-2 2xl:w-[62rem] md:w-[50rem]  h-[700px] p-2">
-          <img class="rounded-md h-full m-auto" src={mainInfo?.image} />
-          <p class="text-md bg-white text-black row-span-2 col-span-2 rounded-md p-2 ml-2">
+      <div className="flex flex-col items-center justify-center">
+        <h1 className="pb-10 text-4xl 2xl:text-5xl font-semibold margin-auto"> Party</h1>
+        <div class="bg-party-blue rounded-lg text-white margin-auto grid grid-cols-3 grid-rows-2 w-[600px] 2xl:w-[800px] h-[400px] 2xl:h-[500px] p-2">
+          <img class="object-cover rounded-md h-full w-full" src={mainInfo?.image} />
+          <p class="text-sm 2xl:text-md bg-white text-black row-span-2 col-span-2 rounded-md p-2 ml-2 overflow-auto">
             {mainInfo?.description}
           </p>
           <div>
-            <p class="text-3xl font-semibold text-center pt-2 pb-6">
+            <p class="text-xl 2xl:text-3xl font-semibold text-center pt-2 pb-6">
               {mainInfo?.name}
             </p>
-            <p class="font-normal text-md p-2">{mainInfo?.description}</p>
+            <p class="font-normal text-sm 2xl:text-md p-2">{mainInfo?.description}</p>
           </div>
         </div>
       </div>
