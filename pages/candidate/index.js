@@ -20,7 +20,8 @@ function Candidate() {
   ]);
 
   const handleCandidateChange = (event) => {
-    const index = event.target.value
+    const index = event.target.value;
+    console.log(index);
     setMainIndex(index);
     changeCards(index);
   };
@@ -31,6 +32,7 @@ function Candidate() {
   }, [cards]);
 
   function changeCards(index) {
+    index = parseInt(index);
     let array = [
       index - 4 >= 0 ? cards[index - 4] : null,
       index - 3 >= 0 ? cards[index - 3] : null,
@@ -42,18 +44,31 @@ function Candidate() {
       index + 3 < len ? cards[index + 3] : null,
       index + 4 < len ? cards[index + 4] : null,
     ];
-
+    console.log(array);
     setDisplayCards(array);
   }
 
   return (
     <div className="body flex h-screen ">
-      <a className="absolute m-4 text-yellow text-xl font-semibold" href="../home">
+      <a
+        className="absolute m-4 text-yellow text-xl font-semibold"
+        href="../home"
+      >
         Back
       </a>
       <div className="absolute top-0 w-[22rem] sm:1/5 mt-0 h-full -z-10 bg-green">
-        <svg width="100%" height="100%"className="ml-36 xl:ml-50 lg:ml-60 md:ml-48 sm:ml-40">
-          <ellipse cx="-60%" cy="50%" rx="122%" ry="80%" className="fill-green" />
+        <svg
+          width="100%"
+          height="100%"
+          className="ml-36 xl:ml-50 lg:ml-60 md:ml-48 sm:ml-40"
+        >
+          <ellipse
+            cx="-60%"
+            cy="50%"
+            rx="122%"
+            ry="80%"
+            className="fill-green"
+          />
         </svg>
       </div>
       <div
@@ -67,13 +82,13 @@ function Candidate() {
         //     changeCards(Math.min(len, _index++));
         //   }
         // }}
-        className="outer flex flex-col justify-center w-2/5 h-[90%] ml-6 my-auto gap-4 p-2"
+        className="outer flex flex-col justify-center w-4/5 h-[90%] ml-6 my-auto gap-4 p-2"
       >
         <input
           className="fixed w-[37%] 2xl:w-[40%] h-3 bg-white/80 rounded-sm appearance-none cursor-pointer range-lg top-20 origin-left transform rotate-90"
           type="range"
           min="0"
-          max={cards.length-1}
+          max={cards.length - 1}
           value={mainIndex}
           onChange={handleCandidateChange}
         />
@@ -135,18 +150,17 @@ function Candidate() {
       <div className="flex flex-col items-center justify-center overflow-auto">
         <h1 className="pb-10 text-5xl font-semibold">Candidate</h1>
         <div class="bg-party-blue rounded-lg pb-2 text-white w-1/3 p-2">
-          <img class="rounded-md"
+          <img
+            class="rounded-md"
             src="https://www.eng.ku.ac.th/wp-content/uploads/2020/11/32-James-Edward-Brucker.jpg"
           />
           <p class="text-2xl font-bold dark:text-white text-center pt-2">
             James Edward Brucker
           </p>
-          <p class="text-xl dark:text-white text-center pb-2">
-            SKEKILLER
-          </p>
+          <p class="text-xl dark:text-white text-center pb-2">SKEKILLER</p>
           <p class="p-2 text-sm bg-white text-black rounded-md">
-            ตำแหน่งทางวิชาการ: Software Engineering Specialist การศึกษา: Ph.D
-            ( Electrical Engineering ), University of California , 1986 M.A (
+            ตำแหน่งทางวิชาการ: Software Engineering Specialist การศึกษา: Ph.D (
+            Electrical Engineering ), University of California , 1986 M.A (
             Mathematics ), University of Hawaii , 1981 M.A ( Statistics ),
             University of California , 1978 B.A. ( Mathematics), Johns Hopkins
             University, 1977
