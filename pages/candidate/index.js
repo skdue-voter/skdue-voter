@@ -21,14 +21,14 @@ function Candidate() {
 
   const handleCandidateChange = (event) => {
     const index = event.target.value;
-    console.log(index);
+    // console.log(index);
     setMainIndex(index);
     changeCards(index);
   };
 
   useEffect(() => {
     setLen(cards.length);
-    console.log("set length", len);
+    // console.log("set length", len);
   }, [cards]);
 
   function changeCards(index) {
@@ -44,7 +44,7 @@ function Candidate() {
       index + 3 < len ? cards[index + 3] : null,
       index + 4 < len ? cards[index + 4] : null,
     ];
-    console.log(array);
+    // console.log(array);
     setDisplayCards(array);
   }
 
@@ -122,7 +122,7 @@ function Candidate() {
               
               `}
                 onClick={(e) => {
-                  console.log("card", card);
+                  // console.log("card", card);
                   setMainIndex(card);
                   changeCards(card);
                 }}
@@ -149,16 +149,16 @@ function Candidate() {
       </div>
       <div className="flex flex-col items-center justify-center">
         <h1 className="pb-10 text-5xl font-semibold">Candidate</h1>
-        <div class="bg-party-blue rounded-lg pb-2 text-white w-[300px] 2xl:w-[400px] p-2">
+        <div className="bg-party-blue rounded-lg pb-2 text-white w-[300px] 2xl:w-[400px] p-2">
           <img
-            class="object-cover rounded-md h-[13rem] 2xl:h-[17rem] w-full"
+            className="object-cover rounded-md h-[13rem] 2xl:h-[17rem] w-full"
             src="https://www.eng.ku.ac.th/wp-content/uploads/2020/11/32-James-Edward-Brucker.jpg"
           />
-          <p class="text-xl 2xl:text-2xl font-bold dark:text-white text-center pt-2">
+          <p className="text-xl 2xl:text-2xl font-bold dark:text-white text-center pt-2">
             James Edward Brucker
           </p>
-          <p class="text-md 2xl:text-xl dark:text-white text-center pb-2">SKEKILLER</p>
-          <p class="p-2 text-sm 2xl:text-lg bg-white text-black rounded-md h-[13rem] 2xl:h-[17rem] overflow-auto">
+          <p className="text-md 2xl:text-xl dark:text-white text-center pb-2">SKEKILLER</p>
+          <p className="p-2 text-sm 2xl:text-lg bg-white text-black rounded-md h-[13rem] 2xl:h-[17rem] overflow-auto">
             ตำแหน่งทางวิชาการ: Software Engineering Specialist การศึกษา: Ph.D (
             Electrical Engineering ), University of California , 1986 M.A (
             Mathematics ), University of Hawaii , 1981 M.A ( Statistics ),

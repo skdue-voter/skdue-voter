@@ -18,8 +18,8 @@ const VoteParty = () => {
     await axios.get("https://sankasaint.helloyeew.dev/api/party")
       .then((response) => {
         setDisplayButton(response.data.party);
-        console.log(response.data.party);
-        console.log(displayButtons);
+        // console.log(response.data.party);
+        // console.log(displayButtons);
       })
       .catch((error) => {
         window.alert(error);
@@ -39,7 +39,7 @@ const VoteParty = () => {
     } else {
       setDisplayCard(card);
     }
-    console.log(displayCard.id);
+    // console.log(displayCard.id);
   }
 
   return (
@@ -64,7 +64,7 @@ const VoteParty = () => {
                     displayCard.id === card.id ? "bg-yellow" : "bg-gray"
                   }`}
                   onClick={(e) => {
-                    console.log("card", card.id);
+                    // console.log("card", card.id);
                     handleSelectButton(card);
                   }}
                 >
@@ -76,18 +76,18 @@ const VoteParty = () => {
         </div>
 				<div className="grid grid-cols-1 grid-rows-7 gap-4 max-w-[16rem] 2xl:max-w-[21rem]">
 					{displayCard.name !== undefined ? (
-						<div class="bg-party-blue rounded-lg pb-2 text-white text-center p-2 row-span-5 h-[19rem] 2xl:h-[24rem]">
+						<div className="bg-party-blue rounded-lg pb-2 text-white text-center p-2 row-span-5 h-[19rem] 2xl:h-[24rem]">
 							<img
-								class="object-cover rounded-md mb-2 w-full h-[15rem] 2xl:h-[20rem]"
+								className="object-cover rounded-md mb-2 w-full h-[15rem] 2xl:h-[20rem]"
 								src={displayCard.image}
 							/>
-							<p class="text-2xl font-bold">
+							<p className="text-2xl font-bold">
 								{displayCard.name}
 							</p>
 						</div>
 					) : (
-						<div class="bg-party-blue rounded-lg pb-2 text-white text-center p-2 row-span-5 flex h-[19rem] 2xl:h-[24rem]">
-							<p class="text-xl m-auto">
+						<div className="bg-party-blue rounded-lg pb-2 text-white text-center p-2 row-span-5 flex h-[19rem] 2xl:h-[24rem]">
+							<p className="text-xl m-auto">
                 {displayCard.id !== "no" ? "Please select party to vote": "Choose Vote No"}</p>
 						</div>
 					)}

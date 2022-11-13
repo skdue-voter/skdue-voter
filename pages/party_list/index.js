@@ -22,7 +22,7 @@ function PartyList() {
     axios
       .get(`https://sankasaint.helloyeew.dev/api/party`)
       .then((res) => {
-        console.log(res.data.party);
+        // console.log(res.data.party);
         let data = res.data.party;
         setCards(data);
         setDisplayCards([
@@ -39,7 +39,7 @@ function PartyList() {
         setMainInfo(data[0]);
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 
@@ -89,7 +89,7 @@ function PartyList() {
           />
         </svg>
       </div>
-      <div className="outer flex flex-col justify-center w-[45%] h-[90%] ml-6 my-auto gap-4 p-2">
+      <div className="outer flex flex-col justify-center w-[42%] h-[90%] ml-6 my-auto gap-4 p-2">
         <input
           className="fixed w-[37%] 2xl:w-[40%] h-3 bg-white/80 rounded-sm appearance-none cursor-pointer range-lg top-20 origin-left transform rotate-90"
           type="range"
@@ -129,7 +129,7 @@ function PartyList() {
               
               `}
                 onClick={(e) => {
-                  console.log("card", id - 1);
+                  // console.log("card", id - 1);
                   setMainIndex(id - 1);
                   changeCards(id - 1);
                 }}
@@ -156,16 +156,16 @@ function PartyList() {
       </div>
       <div className="flex flex-col items-center justify-center">
         <h1 className="pb-10 text-4xl 2xl:text-5xl font-semibold margin-auto"> Party</h1>
-        <div class="bg-party-blue rounded-lg text-white margin-auto grid grid-cols-3 grid-rows-2 w-[600px] 2xl:w-[800px] h-[400px] 2xl:h-[500px] p-2">
-          <img class="object-cover rounded-md h-full w-full" src={mainInfo?.image} />
-          <p class="text-sm 2xl:text-md bg-white text-black row-span-2 col-span-2 rounded-md p-2 ml-2 overflow-auto">
+        <div className="bg-party-blue rounded-lg text-white margin-auto grid grid-cols-3 grid-rows-2 w-[600px] 2xl:w-[800px] h-[500px] 2xl:h-[600px] p-2">
+          <img className="object-cover rounded-md h-full w-full" src={mainInfo?.image} />
+          <p className="text-sm 2xl:text-md bg-white text-black row-span-2 col-span-2 rounded-md p-2 ml-2 overflow-auto">
             {mainInfo?.description}
           </p>
           <div>
-            <p class="text-xl 2xl:text-3xl font-semibold text-center pt-2 pb-6">
+            <p className="text-xl 2xl:text-3xl font-semibold text-center pt-2 pb-6">
               {mainInfo?.name}
             </p>
-            <p class="font-normal text-sm 2xl:text-md p-2">{mainInfo?.description}</p>
+            <p className="font-normal text-sm 2xl:text-md p-2">{mainInfo?.description}</p>
           </div>
         </div>
       </div>

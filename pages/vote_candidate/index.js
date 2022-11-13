@@ -18,8 +18,8 @@ const VoteCandidate = () => {
     await axios.get("https://sankasaint.helloyeew.dev/api/candidate")
       .then((response) => {
         setDisplayButton(response.data.result);
-        console.log(response.data.result);
-        console.log(displayButtons);
+        // console.log(response.data.result);
+        // console.log(displayButtons);
       })
       .catch((error) => {
         window.alert(error);
@@ -39,7 +39,7 @@ const VoteCandidate = () => {
     } else {
       setDisplayCard(card);
     }
-    console.log(displayCard.id);
+    // console.log(displayCard.id);
   }
 
   return (
@@ -64,7 +64,7 @@ const VoteCandidate = () => {
                     displayCard.id === card.id ? "bg-yellow" : "bg-gray"
                   }`}
                   onClick={(e) => {
-                    console.log("card", card.id);
+                    // console.log("card", card.id);
                     handleSelectButton(card);
                   }}
                 >
@@ -76,21 +76,21 @@ const VoteCandidate = () => {
         </div>
 				<div className="grid grid-cols-1 grid-rows-7 gap-4 max-w-[16rem] 2xl:max-w-[21rem]">
 					{displayCard.user !== undefined ? (
-						<div class="bg-party-blue rounded-lg pb-2 text-white text-center p-2 row-span-5 h-[20rem] 2xl:h-[25rem]">
+						<div className="bg-party-blue rounded-lg pb-2 text-white text-center p-2 row-span-5 h-[20rem] 2xl:h-[25rem]">
 							<img
-								class="object-cover rounded-md mb-2 w-full h-[15rem] 2xl:h-[20rem]"
+								className="object-cover rounded-md mb-2 w-full h-[15rem] 2xl:h-[20rem]"
 								src={displayCard.image}
 							/>
-							<p class="text-2xl font-bold">
+							<p className="text-2xl font-bold">
 								{displayCard.user.first_name} {displayCard.user.last_name}
 							</p>
-							<p class="text-xl">
+							<p className="text-xl">
 								{displayCard.party && displayCard.party.name}
 							</p>
 						</div>
 					) : (
-						<div class="bg-party-blue rounded-lg pb-2 text-white text-center p-2 row-span-5 flex h-[20rem] 2xl:h-[25rem]">
-							<p class="text-xl m-auto">
+						<div className="bg-party-blue rounded-lg pb-2 text-white text-center p-2 row-span-5 flex h-[20rem] 2xl:h-[25rem]">
+							<p className="text-xl m-auto">
                 {displayCard.id !== "no" ? "Please select candidate to vote": "Choose Vote No"}</p>
 						</div>
 					)}
