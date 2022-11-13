@@ -49,7 +49,7 @@ function Candidate() {
   }
 
   return (
-    <div className="body flex h-screen ">
+    <div className="body flex h-screen overflow-hidden">
       <a
         className="absolute m-4 text-yellow text-xl font-semibold"
         href="../home"
@@ -82,7 +82,7 @@ function Candidate() {
         //     changeCards(Math.min(len, _index++));
         //   }
         // }}
-        className="outer flex flex-col justify-center w-4/5 h-[90%] ml-6 my-auto gap-2 p-2"
+        className="outer flex flex-col justify-center w-1/2 h-[90%] ml-6 my-auto gap-2 p-2"
       >
         <input
           className="fixed w-[37%] 2xl:w-[40%] h-3 bg-white/80 rounded-sm appearance-none cursor-pointer range-lg top-20 origin-left transform rotate-90"
