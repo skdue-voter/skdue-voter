@@ -33,11 +33,11 @@ const Login = () => {
     //     console.log(e);
     //   });
 
-    handleRedirect();
+    // handleRedirect();
   }
 
   function handleRedirect() {
-    return window.location.replace("/candidate");
+    return window.location.replace("/hom");
   }
 
   async function handleLogin(event) {

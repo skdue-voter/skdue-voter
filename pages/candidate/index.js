@@ -34,10 +34,9 @@ function Candidate() {
 
   function logout() {
     axios
-      .post(
-        `https://sankasaint.helloyeew.dev/api/logout`
-        // , {git withCredentials: true,}
-      )
+      .post(`https://sankasaint.helloyeew.dev/api/logout`, null, {
+        withCredentials: true,
+      })
       .then((res) => {
         console.log("logout success", res);
       })
