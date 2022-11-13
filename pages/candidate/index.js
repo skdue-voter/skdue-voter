@@ -101,7 +101,7 @@ function Candidate() {
               ${card == null ? "invisible" : ""}
                  ${
                    index == 4
-                     ? "font-semibold w-1/2 md:py-5 max-w-[22rem] "
+                     ? "font-semibold w-3/5 md:py-5 max-w-[22rem] "
                      : "opacity-60 "
                  }
                ${
@@ -116,7 +116,7 @@ function Candidate() {
               }
               ${
                 index == 2 || index == 3 || index == 5 || index == 6
-                  ? "w-[45%] md:py-4 max-w-[20rem]"
+                  ? "w-1/2 md:py-4 max-w-[20rem]"
                   : ""
               }
               
