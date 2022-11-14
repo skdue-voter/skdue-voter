@@ -134,7 +134,7 @@ function PartyList() {
                   changeCards(id - 1);
                 }}
               >
-                <span className="name ml-3">{id + ")"}</span>
+                <span className="name mx-3 font-bold">{id}</span>
                 <p
                   className={`${
                     index == 0 || index == 8 ? "sm:text-sm lg:text-md" : ""

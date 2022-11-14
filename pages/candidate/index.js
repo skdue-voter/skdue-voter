@@ -109,18 +109,6 @@ function Candidate() {
       >
         Back
       </a>
-      {/* <button
-        className="absolute p-4 top-0 right-44 text-yellow"
-        onClick={(e) => isLogin()}
-      >
-        Logout
-      </button> */}
-      <button
-        className="absolute p-4 top-0 right-0 text-yellow"
-        onClick={(e) => logout()}
-      >
-        Logout
-      </button>
       <div className="absolute top-0 w-[22rem] sm:1/5 mt-0 h-full -z-10 bg-green">
         <svg
           width="100%"
@@ -181,7 +169,7 @@ function Candidate() {
                   changeCards(id - 1);
                 }}
               >
-                <span className="name ml-3">{id + ")"}</span>
+                <span className="name mx-3 font-bold">{id}</span>
                 <p
                   className={`${
                     index == 0 || index == 8 ? "sm:text-sm lg:text-md" : ""
