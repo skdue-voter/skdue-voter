@@ -49,7 +49,7 @@ function Home() {
 
           <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium">
             <p className="col-span-3">Vote Candidate</p>
-            <button type="submit" onClick={() => {window.location.assign("/vote_candidate")}}
+            <button type="submit" onClick={() => {window.location.assign("/vote-candidate")}}
               className="bg-green-lime py-0.5 rounded-md hover:brightness-90">Change</button>
             <p className="text-green-lime col-span-3 font-normal">Voted for Kim Un Jong</p>
             <button type="submit" onClick={() => {window.location.assign("/candidate")}}
@@ -59,10 +59,10 @@ function Home() {
 
           <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium">
             <p className="col-span-3">Vote Party</p>
-            <button type="submit" onClick={() => {window.location.assign("/vote_party")}}
+            <button type="submit" onClick={() => {window.location.assign("/vote-party")}}
               className="bg-yellow-lemon py-0.5 rounded-md hover:brightness-90">Vote</button>
             <p className="text-red col-span-3 font-normal">Vote pending</p>
-            <button type="submit" onClick={() => {window.location.assign("/party_list")}}
+            <button type="submit" onClick={() => {window.location.assign("/party-list")}}
               className="bg-gray py-0.5 font-medium rounded-md hover:brightness-90">Party List</button>
           </div>
           <hr className="my-2 h-px bg-gray border-0" />
