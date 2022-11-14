@@ -201,7 +201,7 @@ function Candidate() {
                 mainInfo?.user?.last_name}
             </p>
             <p className="text-1xl text-white dark:text-white flex justify-center ">
-              {mainInfo?.party}
+              {mainInfo?.party?.name}
             </p>
             <p class="p-2 font-normal md:text-sm bg-white rounded-10 w-[21.5rem]">
               {mainInfo?.description}
