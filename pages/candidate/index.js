@@ -30,7 +30,7 @@ function Candidate() {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((e) => {
         console.log(e);
@@ -40,6 +40,7 @@ function Candidate() {
   }
 
   function logout() {
+    // move this function to home page
     alert("not working right now");
     axios
       .post(`https://sankasaint.helloyeew.dev/api/logout`, null, {
@@ -63,7 +64,7 @@ function Candidate() {
     axios
       .get(`https://sankasaint.helloyeew.dev/api/candidate`)
       .then((res) => {
-        console.log(res.data.result);
+        // console.log(res.data.result);
         let data = res.data.result;
         setCards(data);
         setDisplayCards([
@@ -164,7 +165,7 @@ function Candidate() {
               
               `}
                 onClick={(e) => {
-                  console.log("card", id - 1);
+                  // console.log("card", id - 1);
                   setMainIndex(id - 1);
                   changeCards(id - 1);
                 }}

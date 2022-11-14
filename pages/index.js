@@ -32,7 +32,6 @@ const Login = () => {
   async function handleLogin(event) {
     event.preventDefault();
     // alert(JSON.stringify(inputs));
-    console.log(inputs);
     await axios
       .post(`https://sankasaint.helloyeew.dev/api/login`, inputs, {
         withCredentials: true,
