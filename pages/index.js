@@ -14,7 +14,10 @@ const Login = () => {
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
+    setInputs((values) => ({
+      ...values,
+      [name]: value,
+    }));
   };
 
   async function login(data) {
@@ -29,7 +32,11 @@ const Login = () => {
   async function handleLogin(event) {
     event.preventDefault();
     // alert(JSON.stringify(inputs));
-    await axios.post(`http://127.0.0.1:8000/login/`, inputs)
+    console.log(inputs);
+    await axios
+      .post(`https://sankasaint.helloyeew.dev/api/login`, inputs, {
+        withCredentials: true,
+      })
       .then((response) => {
         login(response.data);
       })
@@ -60,18 +67,18 @@ const Login = () => {
             <input
               className="bg-gray rounded-md p-1.5 mb-1.5 w-full"
               type="text"
-              name="citizenID"
+              name="username"
               placeholder="Citizen ID"
-              value={inputs.citizenID || ""}
+              value={inputs.username || ""}
               required
               onChange={handleChange}
             />
             <input
               className="bg-gray rounded-md p-1.5 mb-1.5 w-full"
               type="password"
-              name="cvv"
+              name="password"
               placeholder="CVV"
-              value={inputs.cvv || ""}
+              value={inputs.password || ""}
               required
               onChange={handleChange}
             />

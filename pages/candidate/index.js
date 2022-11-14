@@ -1,23 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
+import axios from "axios";
 
 function Candidate() {
-  const [cards, setCards] = useState([
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-  ]);
+  const [cards, setCards] = useState([]);
   const [len, setLen] = useState(cards.length);
 
   const [mainIndex, setMainIndex] = useState(0);
-  const [displayCards, setDisplayCards] = useState([
-    null,
-    null,
-    null,
-    null,
-    0,
-    1,
-    2,
-    3,
-    4,
-  ]);
+  const [mainInfo, setMainInfo] = useState();
+  const [displayCards, setDisplayCards] = useState([]);
 
   const handleCandidateChange = (event) => {
     const index = event.target.value;
@@ -28,8 +18,71 @@ function Candidate() {
 
   useEffect(() => {
     setLen(cards.length);
-    // console.log("set length", len);
   }, [cards]);
+
+  useEffect(() => {
+    tryGet();
+  }, []);
+
+  async function isLogin() {
+    axios
+      .get(`https://sankasaint.helloyeew.dev/api/profile`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    // handleRedirect();
+  }
+
+  function logout() {
+    alert("not working right now");
+    axios
+      .post(`https://sankasaint.helloyeew.dev/api/logout`, null, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("logout success", res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    // handleRedirect();
+  }
+
+  function handleRedirect() {
+    sessionStorage.removeItem("user");
+    return window.location.replace("/");
+  }
+
+  async function tryGet() {
+    axios
+      .get(`https://sankasaint.helloyeew.dev/api/candidate`)
+      .then((res) => {
+        console.log(res.data.result);
+        let data = res.data.result;
+        setCards(data);
+        setDisplayCards([
+          null,
+          null,
+          null,
+          null,
+          data[0],
+          data[1],
+          data[2],
+          data[3],
+          data[4],
+        ]);
+        setMainInfo(data[0]);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   function changeCards(index) {
     index = parseInt(index);
@@ -44,7 +97,7 @@ function Candidate() {
       index + 3 < len ? cards[index + 3] : null,
       index + 4 < len ? cards[index + 4] : null,
     ];
-    // console.log(array);
+    setMainInfo(cards[index]);
     setDisplayCards(array);
   }
 
@@ -56,6 +109,18 @@ function Candidate() {
       >
         Back
       </a>
+      {/* <button
+        className="absolute p-4 top-0 right-44 text-yellow"
+        onClick={(e) => isLogin()}
+      >
+        Logout
+      </button> */}
+      <button
+        className="absolute p-4 top-0 right-0 text-yellow"
+        onClick={(e) => logout()}
+      >
+        Logout
+      </button>
       <div className="absolute top-0 w-[22rem] sm:1/5 mt-0 h-full -z-10 bg-green">
         <svg
           width="100%"
@@ -71,19 +136,7 @@ function Candidate() {
           />
         </svg>
       </div>
-      <div
-        // onWheel={(event) => {
-        //   let _index = mainIndex;
-        //   if (event.nativeEvent.wheelDelta > 0) {
-        //     setMainIndex(Math.max(0, _index--));
-        //     changeCards(Math.max(0, _index--));
-        //   } else {
-        //     setMainIndex(Math.min(len, _index++));
-        //     changeCards(Math.min(len, _index++));
-        //   }
-        // }}
-        className="outer flex flex-col justify-center w-1/2 h-[90%] ml-6 my-auto gap-2 p-2"
-      >
+      <div className="outer flex flex-col justify-center w-1/2 h-[90%] ml-6 my-auto gap-2 p-2">
         <input
           className="fixed w-[37%] 2xl:w-[40%] h-3 bg-white/80 rounded-sm appearance-none cursor-pointer range-lg top-20 origin-left transform rotate-90"
           type="range"
@@ -93,6 +146,7 @@ function Candidate() {
           onChange={handleCandidateChange}
         />
         {displayCards.map((card, index) => {
+          let id = card != null ? card.id : null;
           let main = mainIndex;
           return (
             <div key={index} className="flex flex-row gap-5 ml-8">
@@ -122,23 +176,25 @@ function Candidate() {
               
               `}
                 onClick={(e) => {
-                  // console.log("card", card);
-                  setMainIndex(card);
-                  changeCards(card);
+                  console.log("card", id - 1);
+                  setMainIndex(id - 1);
+                  changeCards(id - 1);
                 }}
               >
-                <span className="name ml-3">{card + ")"}</span>
+                <span className="name ml-3">{id + ")"}</span>
                 <p
                   className={`${
                     index == 0 || index == 8 ? "sm:text-sm lg:text-md" : ""
                   }`}
                 >
-                  Patkamon Awaiwanont{" "}
+                  {card == null
+                    ? null
+                    : card.user.first_name + " " + card.user.last_name + " "}
                 </p>
               </div>
               <div
                 className={`my-auto  ${
-                  card != main ? "opacity-0" : ""
+                  id - 1 != main ? "opacity-0" : ""
                 } text-white font-medium text-3xl`}
               >
                 {">"}
@@ -152,19 +208,18 @@ function Candidate() {
         <div className="bg-party-blue rounded-lg pb-2 text-white w-[300px] 2xl:w-[400px] p-2">
           <img
             className="object-cover rounded-md h-[13rem] 2xl:h-[17rem] w-full"
-            src="https://www.eng.ku.ac.th/wp-content/uploads/2020/11/32-James-Edward-Brucker.jpg"
+            src={mainInfo?.image} 
           />
           <p className="text-xl 2xl:text-2xl font-bold dark:text-white text-center pt-2">
-            James Edward Brucker
+            {mainInfo?.id +
+              " " +
+              mainInfo?.user?.first_name +
+              " " +
+              mainInfo?.user?.last_name}
           </p>
-          <p className="text-md 2xl:text-xl dark:text-white text-center pb-2">SKEKILLER</p>
+          <p className="text-md 2xl:text-xl dark:text-white text-center pb-2">{mainInfo?.party?.name}</p>
           <p className="p-2 text-sm 2xl:text-lg bg-white text-black rounded-md h-[13rem] 2xl:h-[17rem] overflow-auto">
-            ตำแหน่งทางวิชาการ: Software Engineering Specialist การศึกษา: Ph.D (
-            Electrical Engineering ), University of California , 1986 M.A (
-            Mathematics ), University of Hawaii , 1981 M.A ( Statistics ),
-            University of California , 1978 B.A. ( Mathematics), Johns Hopkins
-            University, 1977
-          </p>
+            {mainInfo?.description}</p>
         </div>
       </div>
     </div>
