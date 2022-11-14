@@ -5,8 +5,8 @@ const Login = () => {
   const [inputs, setInputs] = useState({});
 
   useEffect(() => {
-    let user = sessionStorage.getItem("user");
-    if (user) {
+    let userData = JSON.parse(sessionStorage.getItem("userData"));
+    if (userData) {
       handleRedirect();
     }
   }, []);
@@ -21,7 +21,7 @@ const Login = () => {
   };
 
   async function login(data) {
-    sessionStorage.setItem("user", JSON.stringify(data));
+    sessionStorage.setItem("userData", JSON.stringify(data));
     handleRedirect();
   }
 
@@ -31,8 +31,7 @@ const Login = () => {
 
   async function handleLogin(event) {
     event.preventDefault();
-    alert(JSON.stringify(inputs));
-    console.log(inputs);
+    // alert(JSON.stringify(inputs));
     await axios
       .post(`https://sankasaint.helloyeew.dev/api/login`, inputs, {
         withCredentials: true,
@@ -49,29 +48,23 @@ const Login = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="bg-green w-full">
-        <div className="flex place-content-around place-items-center pt-10 pb-4 px-80">
-          <img className="max-h-8" src={"./logoSkdue.png"} alt="logoSkdue" />
-          <img
-            className="max-h-16"
-            src={"./logoSankasaint.png"}
-            alt="logoSankasaint"
-          />
-          <img className="max-h-20" src={"./logoCatnip.png"} alt="logoCatnip" />
+        <div className="flex place-content-around place-items-center pt-12 pb-8 px-20 xl:px-72">
+          <img className="max-h-8 xl:max-h-9 px-4" src={"./logoSkdue.png"} alt="logoSkdue" />
+          <img className="max-h-28 xl:max-h-32 px-4" src={"./logoSankasaint.png"}  alt="logoSankasaint" />
+          <img className="max-h-28 xl:max-h-32 px-4" src={"./logoCatnip.png"} alt="logoCatnip" />
         </div>
-        <h1 className="text-5xl font-medium text-white text-center py-4">
-          Voting System
-        </h1>
+        <h1 className="text-5xl xl:text-5xl font-medium text-white text-center py-4">Voting System</h1>
       </div>
-      <svg width="100%">
+      <svg width="100%" height="150">
         <ellipse cx="50%" cy="0%" rx="52%" ry="80%" className="fill-green" />
       </svg>
 
-      <div className="z-10 -mt-32">
-        <h1 className="text-3xl font-medium text-white py-2">Login</h1>
-        <div className="bg-white rounded-15 w-96 p-1.5 border border-gray-dark">
+      <div className="z-10 -mt-24">
+        {/* <h1 className="text-3xl font-medium text-white py-2">Login</h1> */}
+        <div className="bg-white rounded-lg w-96 p-1.5 mb-16 border border-gray-dark">
           <form onSubmit={handleLogin}>
             <input
-              className="bg-gray rounded-10 p-1.5 my-1 w-full"
+              className="bg-gray rounded-md p-1.5 mb-1.5 w-full"
               type="text"
               name="username"
               placeholder="Citizen ID"
@@ -80,7 +73,7 @@ const Login = () => {
               onChange={handleChange}
             />
             <input
-              className="bg-gray rounded-10 p-1.5 my-1 w-full"
+              className="bg-gray rounded-md p-1.5 mb-1.5 w-full"
               type="password"
               name="password"
               placeholder="CVV"
@@ -88,12 +81,9 @@ const Login = () => {
               required
               onChange={handleChange}
             />
-            <button
-              type="submit"
-              className="bg-yellow-lemon rounded-10 p-1 my-1 w-full text-xl font-medium hover:opacity-80"
-            >
-              Login
-            </button>
+            <button type="submit"
+              className="bg-yellow-lemon rounded-md p-1 w-full text-xl font-medium hover:brightness-90"
+            >Login</button>
           </form>
         </div>
       </div>
