@@ -31,11 +31,26 @@ const Login = () => {
 
   async function handleLogin(event) {
     event.preventDefault();
-    // alert(JSON.stringify(inputs));
-    await axios
-      .post(`https://sankasaint.helloyeew.dev/api/login`, inputs, {
-        withCredentials: true,
-      })
+    // await axios
+    //   .post(`https://sankasaint.helloyeew.dev/api/login`, inputs, {
+    //     withCredentials: true,
+    //   })
+    //   .then((response) => {
+    //     login(response.data);
+    //   })
+    //   .catch((error) => {
+    //     window.alert("Citizen not found. Wrong citizen ID or CVV");
+    //     console.log(error);
+    //   });
+
+    axios
+      .post(
+        "https://sankasaint.helloyeew.dev/api/auth/login/",
+        {},
+        {
+          auth: inputs,
+        }
+      )
       .then((response) => {
         login(response.data);
       })
@@ -49,11 +64,25 @@ const Login = () => {
     <div className="flex flex-col items-center">
       <div className="bg-green w-full">
         <div className="flex place-content-around place-items-center pt-12 pb-8 px-20 xl:px-72">
-          <img className="max-h-8 xl:max-h-9 px-4" src={"./logoSkdue.png"} alt="logoSkdue" />
-          <img className="max-h-28 xl:max-h-32 px-4" src={"./logoSankasaint.png"}  alt="logoSankasaint" />
-          <img className="max-h-28 xl:max-h-32 px-4" src={"./logoCatnip.png"} alt="logoCatnip" />
+          <img
+            className="max-h-8 xl:max-h-9 px-4"
+            src={"./logoSkdue.png"}
+            alt="logoSkdue"
+          />
+          <img
+            className="max-h-28 xl:max-h-32 px-4"
+            src={"./logoSankasaint.png"}
+            alt="logoSankasaint"
+          />
+          <img
+            className="max-h-28 xl:max-h-32 px-4"
+            src={"./logoCatnip.png"}
+            alt="logoCatnip"
+          />
         </div>
-        <h1 className="text-5xl xl:text-5xl font-medium text-white text-center py-4">Voting System</h1>
+        <h1 className="text-5xl xl:text-5xl font-medium text-white text-center py-4">
+          Voting System
+        </h1>
       </div>
       <svg width="100%" height="150">
         <ellipse cx="50%" cy="0%" rx="52%" ry="80%" className="fill-green" />
@@ -81,9 +110,12 @@ const Login = () => {
               required
               onChange={handleChange}
             />
-            <button type="submit"
+            <button
+              type="submit"
               className="bg-yellow-lemon rounded-md p-1 w-full text-xl font-medium hover:brightness-90"
-            >Login</button>
+            >
+              Login
+            </button>
           </form>
         </div>
       </div>
