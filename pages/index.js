@@ -3,13 +3,27 @@ import axios from "axios";
 
 const Login = () => {
   const [inputs, setInputs] = useState({});
+  let [voteEnd, setVoteEnd] = useState(false);
 
   useEffect(() => {
     let userData = JSON.parse(sessionStorage.getItem("userData"));
     if (userData) {
       handleRedirect();
+    } else {
+      getVoteResult();
     }
   }, []);
+
+  async function getVoteResult() {
+    await axios.get(`https://sankasaint.helloyeew.dev/api/election/2/result/area/1`)
+      .then((response) => {
+        // console.log(response.data.vote_result);
+        setVoteEnd(true)
+      })
+      .catch((error) => {
+        // console.log(error);
+      });
+  }
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -90,7 +104,7 @@ const Login = () => {
 
       <div className="z-10 -mt-24">
         {/* <h1 className="text-3xl font-medium text-white py-2">Login</h1> */}
-        <div className="bg-white rounded-lg w-96 p-1.5 mb-16 border border-gray-dark">
+        <div className="bg-white rounded-lg w-96 p-1.5 mb-4 border border-gray-dark">
           <form onSubmit={handleLogin}>
             <input
               className="bg-gray rounded-md p-1.5 mb-1.5 w-full"
@@ -118,6 +132,16 @@ const Login = () => {
             </button>
           </form>
         </div>
+        {voteEnd && 
+        <div className="flex justify-center text-xl font-semibold mb-10">
+          <p className="px-2">The election has ended</p>
+          <button
+            type="submit"
+            onClick={() => { window.location.assign("/vote-result");}}
+            className="text-green-lime hover:brightness-90"
+            >See the Result
+          </button>
+        </div>}
       </div>
     </div>
   );
