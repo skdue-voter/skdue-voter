@@ -7,7 +7,9 @@ function Home() {
     // get user data from session storage for voting function
     let userData = JSON.parse(sessionStorage.getItem("userData"));
     let candidate = JSON.parse(sessionStorage.getItem('candidate'));
+    let party = JSON.parse(sessionStorage.getItem('party'))
     console.log(candidate)
+    console.log(party)
     SourceBufferList
     if (!userData) {
       window.location.replace("/");

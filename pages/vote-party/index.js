@@ -29,6 +29,7 @@ const VoteParty = () => {
   async function handleVote() {
     if (window.confirm(`Voting for ${displayCard.id}?`) === true) {
       // save to session storage
+      sessionStorage.setItem('party', JSON.stringify(displayCard))
       window.alert("Vote Completed")
     }
   }
