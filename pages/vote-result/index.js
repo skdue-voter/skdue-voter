@@ -75,12 +75,12 @@ const VoteResult = () => {
         <button
           type="submit"
           onClick={(e) => {handleSelectType(0)}}
-          className={`p-2 rounded-full w-1/2 ${selectType === 0 ? "bg-white drop-shadow-md" : ""}`}
+          className={`p-2 rounded-full w-1/2 ${selectType === 0 ? "bg-white drop-shadow-md" : "opacity-60"}`}
         >Candidate</button>
         <button
           type="submit"
           onClick={(e) => {handleSelectType(1)}}
-          className={`p-2 rounded-full w-1/2 ${selectType === 1 ? "bg-white drop-shadow-md" : ""}`}
+          className={`p-2 rounded-full w-1/2 ${selectType === 1 ? "bg-white drop-shadow-md" : "opacity-60"}`}
         >Party</button>
       </div>
 			
@@ -88,15 +88,15 @@ const VoteResult = () => {
         {resultData.map((data, index) => {
           return (
             <div className="flex bg-white rounded-lg border border-gray-dark">
-              <p className="flex-none text-center mx-5 mt-5 font-bold text-xl">{data.vote_count}</p>
+              <p className="flex-none rounded-l-lg text-center px-2 pt-2 font-semibold text-xl text-white bg-green">{data.vote_count}</p>
               <img
                 className="flex-none object-cover w-44 h-full"
                 src={data.candidate.image}
               />
-              <div className="flex-auto m-4">
-                <p className="text-2xl font-semibold mb-1">{data.candidate.user.first_name} {data.candidate.user.last_name}</p>
+              <div className="flex-auto my-2 mx-4">
+                <p className="text-2xl font-semibold">{data.candidate.user.first_name} {data.candidate.user.last_name}</p>
                 <p className="text-lg mb-4">{data.candidate.description}</p>
-                <div className="text-md mt-2 opacity-80">
+                <div className="text-md opacity-80">
                   <p>Party: {data.candidate.party?c.candidate.party:"Liberal"}</p>
                   <p>Area: {data.candidate.area.name}</p>
                 </div>
