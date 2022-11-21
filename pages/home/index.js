@@ -6,6 +6,9 @@ function Home() {
   useEffect(() => {
     // get user data from session storage for voting function
     let userData = JSON.parse(sessionStorage.getItem("userData"));
+    let candidate = JSON.parse(sessionStorage.getItem('candidate'));
+    console.log(candidate)
+    SourceBufferList
     if (!userData) {
       window.location.replace("/");
     }
