@@ -234,21 +234,30 @@ function Home() {
                 )}
           </div>
           <hr className="my-2 h-px bg-gray border-0" />
-
-          <p className="text-red mb-1 text-center font-medium">
-            Only Voted for Candidate
-          </p>
-          <div className="m-1">
+          
+          {voteParty !== null || voteCandidate !== null ? (
+            <div>
+            <p className="text-green-lime mb-1 text-center font-medium">
+            Please confirm your vote
+            </p>
+            <div className="m-1">
             <button
               type="submit"
               onClick={() => {
                 handleVote();
               }}
-              className="text-white bg-red rounded-md p-3 w-full text-xl font-medium hover:brightness-90"
+              className="text-white bg-green-lime rounded-md p-3 w-full text-xl font-medium hover:brightness-90"
             >
               Confirm Vote
             </button>
           </div>
+          </div>
+          ) : (
+            <p className="text-red mb-1 text-center font-medium">
+            Vote pending
+            </p>
+            
+          )}
         </div>
       </div>
     </div>
