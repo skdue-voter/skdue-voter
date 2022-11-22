@@ -167,7 +167,7 @@ function PartyList() {
             </p>
             <div> 
             <div className="font-normal text-sm 2xl:text-md p-2">
-              <div dangerouslySetInnerHTML={{__html: mainInfo?.quote}}></div>
+              {mainInfo?.quote}
             </div>
             </div>
           </div>
