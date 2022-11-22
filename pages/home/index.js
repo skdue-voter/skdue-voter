@@ -4,6 +4,7 @@ import { browserHistory } from "react-router";
 
 function Home() {
   let [voter, setVoter] = useState({})
+  let [election, setElection] = useState({})
   let [voteCandidate, setVoteCandidate] = useState({})
   let [voteParty, setVoteParty] = useState({})
 
@@ -20,6 +21,7 @@ function Home() {
       window.location.replace("/");
     }
     getUserInfo();
+    getElectionInfo();
   }, []);
 
   async function handleVote() {
@@ -73,6 +75,17 @@ function Home() {
       });
   }
 
+  async function getElectionInfo() {
+    await axios.get("https://sankasaint.helloyeew.dev/api/election/1")
+    .then((response) => {
+      console.log(response.data)
+      setElection(response.data.election)
+    })
+    .catch((error) => {
+      window.alert(error);
+    });
+  }
+
   return (
     <div>
       <div className="bg-green w-full absolute ">
@@ -110,14 +123,13 @@ function Home() {
 
         <div className="bg-white rounded-lg border border-gray-dark col-span-3">
           <h1 className="text-xl xl:text-3xl font-semibold p-2 items-center">
-            Donald Trump's Election
+            {election?.name}
           </h1>
           <img
             className="object-cover w-full"
-            src="trump.jpg"
-            alt="donald trump image"
+            src={election?.front_image}
           ></img>
-          <p className="m-3">Make Thailand great again!</p>
+          <p className="m-3">{election?.description}</p>
           <hr className="my-2 h-px bg-gray border-0" />
 
           <div>
