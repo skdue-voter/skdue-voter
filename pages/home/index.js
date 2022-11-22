@@ -253,10 +253,22 @@ function Home() {
           </div>
           </div>
           ) : (
+            <div>
             <p className="text-red mb-1 text-center font-medium">
             Vote pending
             </p>
-            
+            <div className="m-1">
+            <button
+              type="submit"
+              onClick={() => {
+                handleVote();
+              }}
+              className="text-white bg-red rounded-md p-3 w-full text-xl font-medium hover:brightness-90"
+            >
+              Confirm Vote
+            </button>
+          </div>
+          </div>
           )}
         </div>
       </div>
