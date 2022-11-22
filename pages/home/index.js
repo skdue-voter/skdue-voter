@@ -27,12 +27,28 @@ function Home() {
   async function handleVote() {
     if (
       window.confirm(
-        "Voting for Candidate Kim and\nVoting for Put-in Party?"
+        `Voting for Candidate ${voteCandidate?.user?.first_name} ${voteCandidate?.user?.last_name} and\nVoting for ${voteParty?.name} Party?`
       ) === true
     ) {
       // await axios vote POST
-      window.alert("Vote Completed");
-    }
+      await axios.post("https://sankasaint.helloyeew.dev/api/election/1/vote", 
+        {
+          "party_id": voteParty?.id.toString(),
+          "candidate_id": voteCandidate?.id.toString()
+        }, 
+        {
+          headers: {
+            Authorization:
+              "Token " + JSON.parse(sessionStorage.getItem("userData")).token,
+          },
+        }).then((response) => {
+          sessionStorage.clear();
+        })
+        .catch((error) => {
+          window.alert("Can't Vote");
+          console.log(error);
+        });
+      }
   }
 
   async function handleLogout() {
@@ -64,10 +80,11 @@ function Home() {
         },
       })
       .then((response) => {
+        console.log("Here")
+        sessionStorage.setItem('voter', JSON.stringify(response.data.result))
         let user = response.data.result.user
         setVoter(response.data.result)
-        console.log("Here")
-        console.log(user);
+        console.log(response.data.result);
       })
       .catch((error) => {
         window.alert("error");
@@ -99,8 +116,7 @@ function Home() {
           Logout
         </button>
         <h1 className="text-5xl font-medium text-white text-center mt-4">
-          {/* Need to be change to {voter.first_name} {voter.last_name} */}
-          {voter?.user?.username}
+          {voter?.user?.first_name} {voter?.user?.last_name}
         </h1>
       </div>
       <svg width="100%" height="140">
@@ -116,9 +132,8 @@ function Home() {
           <h1 className="text-xl xl:text-2xl text-center font-semibold p-2 items-center">
             Voter's Information
           </h1>
-          <p>First Name: {voter?.user?.last_name}</p>
-          <p>Last Name: {voter?.user?.last_name}</p>
-          <p>Username: {voter?.user?.username}</p>       
+          <p>First Name: {voter?.user?.first_name}</p>
+          <p>Last Name: {voter?.user?.last_name}</p>    
         </div>
 
         <div className="bg-white rounded-lg border border-gray-dark col-span-3">

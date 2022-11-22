@@ -9,13 +9,17 @@ const VoteCandidate = () => {
 
   useEffect(() => {
     let user = JSON.parse(sessionStorage.getItem("user"));
-    let party = JSON.parse(sessionStorage.getItem('party'))
-    getCandidateList();
+    let party = JSON.parse(sessionStorage.getItem('party'));
+    let voter = JSON.parse(sessionStorage.getItem('voter'));
+    console.log(voter?.area?.id)
+    getCandidateList(voter?.area?.id);
     setVoteParty(party)
     // if (!user) {
     //   handleRedirect();
     // }
   }, []);
+
+
 
   function handleRedirect() {
     if (voteParty === null) {
@@ -25,12 +29,10 @@ const VoteCandidate = () => {
     }
   }
 
-  async function getCandidateList() {
-    await axios.get("https://sankasaint.helloyeew.dev/api/candidate")
+  async function getCandidateList(voter) {
+    await axios.get(`https://sankasaint.helloyeew.dev/api/area/${voter}`)
       .then((response) => {
-        setDisplayButton(response.data.result);
-        // console.log(response.data.result);
-        // console.log(displayButtons);
+        setDisplayButton(response.data.result.candidates);
       })
       .catch((error) => {
         window.alert(error);
