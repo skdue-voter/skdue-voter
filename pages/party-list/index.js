@@ -166,7 +166,7 @@ function PartyList() {
               {mainInfo?.name}
             </p>
             <div> 
-            <div className="font-normal text-sm 2xl:text-md p-2">
+            <div className="font-normal text-sm 2xl:text-md p-2 break-words">
               {mainInfo?.quote}
             </div>
             </div>
