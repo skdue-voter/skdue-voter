@@ -31,7 +31,7 @@ function Home() {
       ) === true
     ) {
       // await axios vote POST
-      await axios.post("https://sankasaint.helloyeew.dev/api/election/1/vote", 
+      await axios.post("https://sankasaint.helloyeew.dev/api/election/current", 
         {
           "party_id": voteParty?.id.toString(),
           "candidate_id": voteCandidate?.id.toString()
@@ -133,7 +133,13 @@ function Home() {
             Voter's Information
           </h1>
           <p>First Name: {voter?.user?.first_name}</p>
-          <p>Last Name: {voter?.user?.last_name}</p>    
+          <p>Last Name: {voter?.user?.last_name}</p> 
+          <p>Email: {voter?.user?.email}</p>
+          <h1 className="text-xl xl:text-2xl text-center font-semibold p-2 items-center">
+            Area's Information
+          </h1>
+          <p>Area name: {voter?.area?.name}</p>
+          <p>Area ID: {voter?.area?.id}</p>
         </div>
 
         <div className="bg-white rounded-lg border border-gray-dark col-span-3">
