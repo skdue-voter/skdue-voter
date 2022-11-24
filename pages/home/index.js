@@ -31,7 +31,7 @@ function Home() {
       ) === true
     ) {
       // await axios vote POST
-      await axios.post("https://sankasaint.helloyeew.dev/api/election/current", 
+      await axios.post(`https://sankasaint.helloyeew.dev/api/election/${election?.id}/vote`, 
         {
           "party_id": voteParty?.id.toString(),
           "candidate_id": voteCandidate?.id.toString()
@@ -93,9 +93,9 @@ function Home() {
   }
 
   async function getElectionInfo() {
-    await axios.get("https://sankasaint.helloyeew.dev/api/election/1")
+    await axios.get("https://sankasaint.helloyeew.dev/api/election/current")
     .then((response) => {
-      console.log(response.data)
+      console.log(response.data.election.id)
       setElection(response.data.election)
     })
     .catch((error) => {
