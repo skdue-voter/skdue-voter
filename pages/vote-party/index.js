@@ -5,14 +5,25 @@ const VoteParty = () => {
   const [inputs, setInputs] = useState({});
   const [displayButtons, setDisplayButton] = useState([]);
   const [displayCard, setDisplayCard] = useState({});
+  let [voteCandidate, setVoteCandidate] = useState({})
 
   useEffect(() => {
     let user = JSON.parse(sessionStorage.getItem("user"));
+    let candidate = JSON.parse(sessionStorage.getItem('candidate'));
+    setVoteCandidate(candidate)
     getCandidateList();
     // if (!user) {
     //   handleRedirect();
     // }
   }, []);
+
+  function handleRedirect() {
+    if (voteCandidate === null) {
+      return window.location.replace("/vote-candidate");
+    } else {
+      return window.location.replace("/home");
+    }
+  }
 
   async function getCandidateList() {
     await axios.get("https://sankasaint.helloyeew.dev/api/party")
@@ -29,7 +40,9 @@ const VoteParty = () => {
   async function handleVote() {
     if (window.confirm(`Voting for ${displayCard.id}?`) === true) {
       // save to session storage
+      sessionStorage.setItem('party', JSON.stringify(displayCard))
       window.alert("Vote Completed")
+      handleRedirect()
     }
   }
 
