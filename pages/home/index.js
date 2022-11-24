@@ -4,6 +4,7 @@ import { browserHistory } from "react-router";
 
 function Home() {
   let [voter, setVoter] = useState({})
+  let [voteStatus, setVoteStatus] = useState({})
   let [election, setElection] = useState({})
   let [voteCandidate, setVoteCandidate] = useState({})
   let [voteParty, setVoteParty] = useState({})
@@ -84,7 +85,9 @@ function Home() {
         sessionStorage.setItem('voter', JSON.stringify(response.data.result))
         let user = response.data.result.user
         setVoter(response.data.result)
+        setVoteStatus(response.data.voted_current_election)
         console.log(response.data.result);
+        console.log(typeof response.data.voted_current_election);
       })
       .catch((error) => {
         window.alert("error");
@@ -186,17 +189,24 @@ function Home() {
               </button></div>) : (
                 <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium"><p className="col-span-3">Vote Candidate</p>
                 <button
+                  disabled={voteStatus===true}
                   type="submit"
                   onClick={() => {
                     window.location.assign("/vote-candidate");
                   }}
-                  className="bg-yellow-lemon py-0.5 rounded-md hover:brightness-90"
+                  className={`py-0.5 rounded-md hover:brightness-90 ${voteStatus === true ? "bg-gray" : "bg-yellow-lemon"}`}
                 >
                   Vote
                 </button>
-                <p className="text-red col-span-3 font-normal">
-                  Vote pending
-                </p>
+                { voteStatus !== true ? (
+                  <p className="text-red col-span-3 font-normal">
+                    Vote pending
+                  </p>
+                ) : (
+                  <p className="text-black col-span-3 font-normal">
+                    Already Voted 
+                  </p>
+                )}
                 <button
                   type="submit"
                   onClick={() => {
@@ -240,21 +250,28 @@ function Home() {
                 className="bg-gray py-0.5 font-medium rounded-md hover:brightness-90"
               >
                 Candidate
-              </button></div>) : (
+              </button></div>) :  (
                 <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium">
                   <p className="col-span-3">Vote Party</p>
                 <button
+                disabled={voteStatus===true}
                   type="submit"
                   onClick={() => {
                     window.location.assign("/vote-party");
                   }}
-                  className="bg-yellow-lemon py-0.5 rounded-md hover:brightness-90"
+                  className={`py-0.5 rounded-md hover:brightness-90 ${voteStatus === true ? "bg-gray" : "bg-yellow-lemon"}`}
                 >
                   Vote
                 </button>
-                <p className="text-red col-span-3 font-normal">
-                  Vote pending
-                </p>
+                { voteStatus !== true ? (
+                  <p className="text-red col-span-3 font-normal">
+                    Vote pending
+                  </p>
+                ) : (
+                  <p className="text-black col-span-3 font-normal">
+                    Already Voted 
+                  </p>
+                )}
                 <button
                   type="submit"
                   onClick={() => {
@@ -287,16 +304,23 @@ function Home() {
           </div>
           ) : (
             <div>
-            <p className="text-red mb-1 text-center font-medium">
-            Vote pending
-            </p>
+            { voteStatus !== true ? (
+              <p className="text-red mb-1 text-center font-medium">
+                Vote pending
+              </p>
+            ) : (
+              <p className="text-green-lime mb-1 text-center font-medium">
+                Already Voted 
+              </p>
+            )}
             <div className="m-1">
             <button
+            disabled={voteStatus===true}
               type="submit"
               onClick={() => {
                 handleVote();
               }}
-              className="text-white bg-red rounded-md p-3 w-full text-xl font-medium hover:brightness-90"
+              className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 ${voteStatus===true ? "bg-gray text-black": "bg-red text-white"}`}
             >
               Confirm Vote
             </button>
