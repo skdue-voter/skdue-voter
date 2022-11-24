@@ -3,7 +3,7 @@ import axios from "axios";
 
 const Login = () => {
   const [inputs, setInputs] = useState({});
-  let [voteEnd, setVoteEnd] = useState(false);
+  let [electionEnd, setElectionEnd] = useState(false);
 
   useEffect(() => {
     let userData = JSON.parse(sessionStorage.getItem("userData"));
@@ -15,10 +15,12 @@ const Login = () => {
   }, []);
 
   async function getVoteResult() {
-    await axios.get(`https://sankasaint.helloyeew.dev/api/election/2/result/area/1`)
+    await axios.get(`https://sankasaint.helloyeew.dev/api/election/current`)
       .then((response) => {
         // console.log(response.data.vote_result);
-        setVoteEnd(true)
+        if  (Object.keys(response.data.vote_result).length === 0) {
+          setElectionEnd(true)
+        }
       })
       .catch((error) => {
         // console.log(error);
@@ -45,18 +47,6 @@ const Login = () => {
 
   async function handleLogin(event) {
     event.preventDefault();
-    // await axios
-    //   .post(`https://sankasaint.helloyeew.dev/api/login`, inputs, {
-    //     withCredentials: true,
-    //   })
-    //   .then((response) => {
-    //     login(response.data);
-    //   })
-    //   .catch((error) => {
-    //     window.alert("Citizen not found. Wrong citizen ID or CVV");
-    //     console.log(error);
-    //   });
-
     axios
       .post(
         "https://sankasaint.helloyeew.dev/api/auth/login/",
@@ -132,7 +122,7 @@ const Login = () => {
             </button>
           </form>
         </div>
-        {voteEnd && 
+        {electionEnd && 
         <div className="flex justify-center text-xl font-semibold mb-10">
           <p className="px-2">The election has ended</p>
           <button

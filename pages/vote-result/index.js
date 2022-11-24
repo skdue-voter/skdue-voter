@@ -27,7 +27,7 @@ const VoteResult = () => {
   }
 
   async function getCandidateList(area) {
-    await axios.get(`https://sankasaint.helloyeew.dev/api/election/2/result/area/${area?area:1}`)
+    await axios.get(`https://sankasaint.helloyeew.dev/api/election/latest/result/area/${area?area:1}`)
       .then((response) => {
         setCandidateList(response.data.vote_result);
       })
@@ -37,7 +37,7 @@ const VoteResult = () => {
   }
 
   async function getPartyList() {
-    await axios.get(`https://sankasaint.helloyeew.dev/api/election/2/result/party`)
+    await axios.get(`https://sankasaint.helloyeew.dev/api/election/latest/result/party`)
       .then((response) => {
         setPartyList(response.data.vote_result);
       })
@@ -46,7 +46,7 @@ const VoteResult = () => {
       });
   }
 
-  const handleSelectArea = (event) => {
+  function handleSelectArea(event) {
     const value = event.target.value;
     setSelectArea(value)
     getCandidateList(value)
@@ -70,7 +70,7 @@ const VoteResult = () => {
         <ellipse cx="50%" cy="32%" rx="52%" ry="55%" className="fill-green" />
       </svg>
 
-      <div className="flex bg-gray rounded-full w-[50rem] m-auto mt-2 text-xl font-semibold">
+      <div className="flex bg-gray rounded-full w-[50rem] m-auto mt-2 text-xl font-semibold ">
         <button
           type="submit"
           onClick={(e) => {handleSelectType(0)}}
@@ -85,7 +85,7 @@ const VoteResult = () => {
 
       {selectType == 0 && <div className="flex bg-white rounded-lg border border-gray-dark p-1 w-[50rem] m-auto mt-4">
         <p className="my-2 mx-4 text-xl font-semibold">Area</p>
-        <select value={selectArea} onChange={handleSelectArea} className="bg-gray text-sm rounded-md w-20 p-2">
+        <select value={selectArea} onChange={handleSelectArea} className="bg-gray text-sm rounded-md w-20 p-2 cursor-pointer">
           {area.map((area, index) => { return (<option>{area.id}</option>) })}
         </select>
         <p className="my-2 mx-4 text-xl">{candidateList[0] && candidateList[0].candidate.area.name}</p>
