@@ -16,7 +16,6 @@ function Home() {
     let party = JSON.parse(sessionStorage.getItem('party'))
     setVoteCandidate(candidate)
     setVoteParty(party)
-    console.log(candidate)
     SourceBufferList
     if (!userData) {
       window.location.replace("/");
@@ -31,7 +30,6 @@ function Home() {
         `Voting for Candidate ${voteCandidate?.user?.first_name} ${voteCandidate?.user?.last_name} and\nVoting for ${voteParty?.name} Party?`
       ) === true
     ) {
-      // await axios vote POST
       await axios.post(`https://sankasaint.helloyeew.dev/api/election/${election?.id}/vote`, 
         {
           "party_id": voteParty?.id.toString(),
@@ -43,7 +41,9 @@ function Home() {
               "Token " + JSON.parse(sessionStorage.getItem("userData")).token,
           },
         }).then((response) => {
-          sessionStorage.clear();
+          window.location.reload();
+          sessionStorage.removeItem('candidate');
+          sessionStorage.removeItem('party');
         })
         .catch((error) => {
           window.alert("Can't Vote");
@@ -81,13 +81,10 @@ function Home() {
         },
       })
       .then((response) => {
-        console.log("Here")
         sessionStorage.setItem('voter', JSON.stringify(response.data.result))
         let user = response.data.result.user
         setVoter(response.data.result)
         setVoteStatus(response.data.voted_current_election)
-        console.log(response.data.result);
-        console.log(typeof response.data.voted_current_election);
       })
       .catch((error) => {
         window.alert("error");
@@ -98,7 +95,6 @@ function Home() {
   async function getElectionInfo() {
     await axios.get("https://sankasaint.helloyeew.dev/api/election/current")
     .then((response) => {
-      console.log(response.data.election.id)
       setElection(response.data.election)
     })
     .catch((error) => {
@@ -118,34 +114,14 @@ function Home() {
         >
           Logout
         </button>
-        <h1 className="text-5xl font-medium text-white text-center mt-4">
-          {voter?.user?.first_name} {voter?.user?.last_name}
-        </h1>
+        <h1 className="text-5xl font-medium text-white text-center mt-4">Voting System</h1>
       </div>
       <svg width="100%" height="140">
         <ellipse cx="50%" cy="32%" rx="52%" ry="55%" className="fill-green" />
       </svg>
 
-      <div className="grid grid-cols-5 gap-4 my-5 w-[600px] xl:w-[800px] m-auto">
-        <div className="bg-white rounded-lg p-1.5 border border-gray-dark col-span-2">
-					<img
-						className="object-cover rounded-md mb-2 w-full h-[15rem] 2xl:h-[20rem]"
-						src={voter?.image}
-					/>
-          <h1 className="text-xl xl:text-2xl text-center font-semibold p-2 items-center">
-            Voter's Information
-          </h1>
-          <p>First Name: {voter?.user?.first_name}</p>
-          <p>Last Name: {voter?.user?.last_name}</p> 
-          <p>Email: {voter?.user?.email}</p>
-          <h1 className="text-xl xl:text-2xl text-center font-semibold p-2 items-center">
-            Area's Information
-          </h1>
-          <p>Area name: {voter?.area?.name}</p>
-          <p>Area ID: {voter?.area?.id}</p>
-        </div>
-
-        <div className="bg-white rounded-lg border border-gray-dark col-span-3">
+      <div className="grid grid-cols-11 gap-4 my-5 w-[600px] xl:w-[800px] m-auto">
+        <div className="bg-white rounded-lg border border-gray-dark col-span-7">
           <h1 className="text-xl xl:text-3xl font-semibold p-2 items-center">
             {election?.name}
           </h1>
@@ -189,21 +165,21 @@ function Home() {
               </button></div>) : (
                 <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium"><p className="col-span-3">Vote Candidate</p>
                 <button
-                  disabled={voteStatus===true}
+                  disabled={voteStatus}
                   type="submit"
                   onClick={() => {
                     window.location.assign("/vote-candidate");
                   }}
-                  className={`py-0.5 rounded-md hover:brightness-90 ${voteStatus === true ? "bg-gray" : "bg-yellow-lemon"}`}
+                  className={`py-0.5 rounded-md hover:brightness-90 disabled:cursor-not-allowed ${voteStatus ? "bg-gray" : "bg-yellow-lemon"}`}
                 >
                   Vote
                 </button>
-                { voteStatus !== true ? (
+                { !voteStatus ? (
                   <p className="text-red col-span-3 font-normal">
                     Vote pending
                   </p>
                 ) : (
-                  <p className="text-black col-span-3 font-normal">
+                  <p className="text-green-lime col-span-3 font-normal">
                     Already Voted 
                   </p>
                 )}
@@ -212,7 +188,7 @@ function Home() {
                   onClick={() => {
                     window.location.assign("/candidate");
                   }}
-                  className="bg-gray py-0.5 font-medium rounded-md hover:brightness-90"
+                  className={`py-0.5 font-medium rounded-md hover:brightness-90 ${!voteStatus ? "bg-gray" : "bg-yellow-lemon"}`}
                 >
                   Candidate
                 </button></div>
@@ -254,21 +230,21 @@ function Home() {
                 <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium">
                   <p className="col-span-3">Vote Party</p>
                 <button
-                disabled={voteStatus===true}
+                  disabled = {voteStatus}
                   type="submit"
                   onClick={() => {
                     window.location.assign("/vote-party");
                   }}
-                  className={`py-0.5 rounded-md hover:brightness-90 ${voteStatus === true ? "bg-gray" : "bg-yellow-lemon"}`}
+                  className={`py-0.5 rounded-md hover:brightness-90 disabled:cursor-not-allowed ${voteStatus ? "bg-gray" : "bg-yellow-lemon"}`}
                 >
                   Vote
                 </button>
-                { voteStatus !== true ? (
+                { !voteStatus ? (
                   <p className="text-red col-span-3 font-normal">
                     Vote pending
                   </p>
                 ) : (
-                  <p className="text-black col-span-3 font-normal">
+                  <p className="text-green-lime col-span-3 font-normal">
                     Already Voted 
                   </p>
                 )}
@@ -277,7 +253,7 @@ function Home() {
                   onClick={() => {
                     window.location.assign("/party-list");
                   }}
-                  className="bg-gray py-0.5 font-medium rounded-md hover:brightness-90"
+                  className={`py-0.5 font-medium rounded-md hover:brightness-90 ${!voteStatus ? "bg-gray" : "bg-yellow-lemon"}`}
                 >
                   Party
                 </button></div>
@@ -304,29 +280,52 @@ function Home() {
           </div>
           ) : (
             <div>
-            { voteStatus !== true ? (
+            { !voteStatus && 
               <p className="text-red mb-1 text-center font-medium">
                 Vote pending
-              </p>
-            ) : (
-              <p className="text-green-lime mb-1 text-center font-medium">
-                Already Voted 
-              </p>
-            )}
+              </p>}
             <div className="m-1">
-            <button
-            disabled={voteStatus===true}
+            {!voteStatus ? <button
               type="submit"
               onClick={() => {
                 handleVote();
               }}
-              className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 ${voteStatus===true ? "bg-gray text-black": "bg-red text-white"}`}
+              className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 ${voteStatus ? "bg-gray text-black": "bg-red text-white"}`}
             >
               Confirm Vote
             </button>
+            :
+            <button
+              disabled = {Object.keys(election).length !== 0}
+              type="submit"
+              onClick={() => {
+                window.location.assign("/vote-result");
+              }}
+              className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 bg-yellow-lemon disabled:bg-gray text-black disabled:cursor-not-allowed `}
+            >{election ? "Waiting for Election End": "Election Result"}
+          </button>}
           </div>
           </div>
           )}
+        </div>
+
+        <div className="col-span-4">
+          <div className="bg-white rounded-lg p-1.5 border border-gray-dark ">
+            <img
+              className="object-cover rounded-md mb-2 w-full"
+              src={voter?.image}
+            />
+            <div className="grid grid-cols-2 break-words">
+              <b>First Name</b>
+              <p>{voter?.user?.first_name}</p>
+              <b>Last Name</b> 
+              <p>{voter?.user?.last_name}</p>
+              {/* <b>Email</b>
+              <p>{voter?.user?.email}</p> */}
+              <b>Area</b>
+              <p>{voter?.area?.name}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
