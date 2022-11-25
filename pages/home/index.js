@@ -288,7 +288,7 @@ function Home() {
               onClick={() => {
                 handleVote();
               }}
-              className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 ${voteStatus ? "bg-gray text-black": "bg-red text-white"}`}
+              className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 ${voteStatus ? "bg-gray text-black disabled:cursor-not-allowed": "bg-red text-white disabled:cursor-not-allowed"}`}
             >
               Confirm Vote
             </button>
