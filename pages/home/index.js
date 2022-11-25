@@ -22,7 +22,6 @@ function Home() {
       window.location.replace("/");
     }
     getUserInfo();
-    getElectionInfo();
     getElectionStatus();
   }, []);
 
@@ -92,9 +91,9 @@ function Home() {
   }
 
   async function getElectionInfo() {
-    await axios.get("https://sankasaint.helloyeew.dev/api/election")
+    await axios.get("https://sankasaint.helloyeew.dev/api/election/latest")
     .then((response) => {
-      setElection(response.data.result.at(0))
+      setElection(response.data.election)
     })
     .catch((error) => {
       window.alert(error);
@@ -104,8 +103,10 @@ function Home() {
   async function getElectionStatus() {
     await axios.get(`https://sankasaint.helloyeew.dev/api/election/current`)
       .then((response) => {
+        setElection(response.data.result)
       })
       .catch((error) => {
+        getElectionInfo()
         setElectionEnd(true)
       });
 
