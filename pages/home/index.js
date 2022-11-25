@@ -283,6 +283,7 @@ function Home() {
               </p>}
             <div className="m-1">
             {!voteStatus ? <button
+              disabled={!voteStatus}
               type="submit"
               onClick={() => {
                 handleVote();
