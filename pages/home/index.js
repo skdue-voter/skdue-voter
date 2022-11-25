@@ -258,7 +258,7 @@ function Home() {
           </div>
           <hr className="my-2 h-px bg-gray border-0" />
           
-          {voteParty !== null || voteCandidate !== null ? (
+          {voteParty !== null && voteCandidate !== null ? (
             <div>
             <p className="text-green-lime mb-1 text-center font-medium">
             Please confirm your vote
@@ -299,7 +299,7 @@ function Home() {
                 window.location.assign("/vote-result");
               }}
               className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 bg-yellow-lemon disabled:bg-gray text-black disabled:cursor-not-allowed `}
-            >{object.keys(election).length !== 0 ? "Waiting for Election End": "Election Result"}
+            >{Object.keys(election).length !== 0 ? "Waiting for Election End": "Election Result"}
           </button>}
           </div>
           </div>
