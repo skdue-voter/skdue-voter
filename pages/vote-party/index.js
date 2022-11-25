@@ -71,7 +71,7 @@ const VoteParty = () => {
         <div className="grid grid-cols-5 grid-rows-5 gap-4 place-items-center col-span-2 items-start">
           {displayButtons.map((card, index) => {
             return (
-              <div>
+              <div key={card.id}>
                 <button
                   className={`w-14 2xl:w-20 h-14 2xl:h-20 hover:brightness-90 rounded-md text-black ${
                     displayCard.id === card.id ? "bg-yellow" : "bg-gray"
