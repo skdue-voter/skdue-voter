@@ -103,7 +103,7 @@ function Home() {
   async function getElectionStatus() {
     await axios.get(`https://sankasaint.helloyeew.dev/api/election/current`)
       .then((response) => {
-        setElection(response.data.result)
+        setElection(response.data.election)
       })
       .catch((error) => {
         getElectionInfo()
