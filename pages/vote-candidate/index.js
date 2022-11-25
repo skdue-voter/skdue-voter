@@ -109,10 +109,10 @@ const VoteCandidate = () => {
                 {displayCard.id !== "no" ? "Please select candidate to vote": "Choose Vote No"}</p>
 						</div>
 					)}
-					<button type="submit" onClick={() => {handleSelectButton({id: "no"})}}
+					{/* <button type="submit" onClick={() => {handleSelectButton({id: "no"})}}
 						className={`bg-gray py-5 rounded-md text-3xl font-medium text-black hover:brightness-90 ${
 							displayCard.id === "no" ? "bg-yellow" : "bg-gray"
-						}`}>Vote No</button>
+						}`}>Vote No</button> */}
           {displayCard.id !== undefined ? 
             <button type="submit" onClick={() => {handleVote()}} 
               className="py-5 text-3xl font-medium text-white rounded-md hover:brightness-90 bg-green-lime">
