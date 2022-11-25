@@ -11,7 +11,6 @@ const VoteCandidate = () => {
     let user = JSON.parse(sessionStorage.getItem("user"));
     let party = JSON.parse(sessionStorage.getItem('party'));
     let voter = JSON.parse(sessionStorage.getItem('voter'));
-    console.log(voter?.area?.id)
     getCandidateList(voter?.area?.id);
     setVoteParty(party)
     // if (!user) {
@@ -54,7 +53,6 @@ const VoteCandidate = () => {
     } else {
       setDisplayCard(card);
     }
-    // console.log(displayCard.id);
   }
 
   return (
@@ -79,7 +77,6 @@ const VoteCandidate = () => {
                     displayCard.id === card.id ? "bg-yellow" : "bg-gray"
                   }`}
                   onClick={(e) => {
-                    // console.log("card", card.id);
                     handleSelectButton(card);
                   }}
                 >

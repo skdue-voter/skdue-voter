@@ -29,8 +29,6 @@ const VoteParty = () => {
     await axios.get("https://sankasaint.helloyeew.dev/api/party")
       .then((response) => {
         setDisplayButton(response.data.party);
-        // console.log(response.data.party);
-        // console.log(displayButtons);
       })
       .catch((error) => {
         window.alert(error);
@@ -52,7 +50,6 @@ const VoteParty = () => {
     } else {
       setDisplayCard(card);
     }
-    // console.log(displayCard.id);
   }
 
   return (
@@ -77,7 +74,6 @@ const VoteParty = () => {
                     displayCard.id === card.id ? "bg-yellow" : "bg-gray"
                   }`}
                   onClick={(e) => {
-                    // console.log("card", card.id);
                     handleSelectButton(card);
                   }}
                 >

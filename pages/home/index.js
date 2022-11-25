@@ -47,7 +47,6 @@ function Home() {
         })
         .catch((error) => {
           window.alert("Can't Vote");
-          console.log(error);
         });
       }
   }
@@ -67,7 +66,6 @@ function Home() {
         })
         .catch((error) => {
           window.alert("Can't logout");
-          console.log(error);
         });
     }
   }
@@ -88,7 +86,6 @@ function Home() {
       })
       .catch((error) => {
         window.alert("error");
-        console.log(error);
       });
   }
 
@@ -302,7 +299,7 @@ function Home() {
                 window.location.assign("/vote-result");
               }}
               className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 bg-yellow-lemon disabled:bg-gray text-black disabled:cursor-not-allowed `}
-            >{election ? "Waiting for Election End": "Election Result"}
+            >{object.keys(election).length !== 0 ? "Waiting for Election End": "Election Result"}
           </button>}
           </div>
           </div>

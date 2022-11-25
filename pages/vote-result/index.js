@@ -22,7 +22,6 @@ const VoteResult = () => {
         setArea(response.data.result);
       })
       .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -32,7 +31,6 @@ const VoteResult = () => {
         setCandidateList(response.data.vote_result);
       })
       .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -42,7 +40,6 @@ const VoteResult = () => {
         setPartyList(response.data.vote_result);
       })
       .catch((error) => {
-        console.log(error);
       });
   }
 

@@ -11,7 +11,6 @@ function Candidate() {
 
   const handleCandidateChange = (event) => {
     const index = event.target.value;
-    // console.log(index);
     setMainIndex(index);
     changeCards(index);
   };
@@ -30,10 +29,8 @@ function Candidate() {
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res);
       })
       .catch((e) => {
-        console.log(e);
       });
 
     // handleRedirect();
@@ -47,10 +44,8 @@ function Candidate() {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("logout success", res);
       })
       .catch((e) => {
-        console.log(e);
       });
     // handleRedirect();
   }
@@ -64,7 +59,6 @@ function Candidate() {
     axios
       .get(`https://sankasaint.helloyeew.dev/api/candidate`)
       .then((res) => {
-        // console.log(res.data.result);
         let data = res.data.result;
         setCards(data);
         setDisplayCards([
@@ -81,7 +75,6 @@ function Candidate() {
         setMainInfo(data[0]);
       })
       .catch((e) => {
-        console.log(e);
       });
   }
 
@@ -165,7 +158,6 @@ function Candidate() {
               
               `}
                 onClick={(e) => {
-                  // console.log("card", id - 1);
                   setMainIndex(id - 1);
                   changeCards(id - 1);
                 }}
