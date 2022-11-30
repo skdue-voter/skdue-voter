@@ -3,7 +3,7 @@ const { test, expect } = require("@playwright/test");
 const { default: axios, Axios } = require("axios");
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("http://localhost:3000/candidate");
+  await page.goto("/candidate");
 });
 
 test.describe("Candidate Page", () => {
