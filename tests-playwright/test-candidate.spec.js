@@ -32,12 +32,6 @@ test.describe("Candidate Page", () => {
           .locator(`//*[@id="__next"]/div/div/div[2]/div[5]/div[1]`)
           .textContent()
       );
-      // if ((await page.locator(`span`, { hasText: num }).isVisible()) == false) {
-      //   i -= 1;
-      //   break;
-      // }
-      // await page.locator(`span`, { hasText: num }).click();
-      // i += 1;
       if ((await page.locator(`span`, { hasText: num }).isVisible()) == false) {
         i -= 1;
         break;
