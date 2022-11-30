@@ -3,24 +3,53 @@ import React, { useState, useEffect } from "react";
 import { browserHistory } from "react-router";
 
 function Home() {
+  let [voter, setVoter] = useState({})
+  let [voteStatus, setVoteStatus] = useState({})
+  let [election, setElection] = useState({})
+  let [voteCandidate, setVoteCandidate] = useState({})
+  let [voteParty, setVoteParty] = useState({})
+  let [electionEnd, setElectionEnd] = useState(false);
+
   useEffect(() => {
     // get user data from session storage for voting function
     let userData = JSON.parse(sessionStorage.getItem("userData"));
+    let candidate = JSON.parse(sessionStorage.getItem('candidate'));
+    let party = JSON.parse(sessionStorage.getItem('party'))
+    setVoteCandidate(candidate)
+    setVoteParty(party)
+    SourceBufferList
     if (!userData) {
       window.location.replace("/");
     }
     getUserInfo();
+    getElectionStatus();
   }, []);
 
   async function handleVote() {
     if (
       window.confirm(
-        "Voting for Candidate Kim and\nVoting for Put-in Party?"
+        `Voting for Candidate ${voteCandidate?.user?.first_name} ${voteCandidate?.user?.last_name} and\nVoting for ${voteParty?.name} Party?`
       ) === true
     ) {
-      // await axios vote POST
-      window.alert("Vote Completed");
-    }
+      await axios.post(`https://sankasaint.helloyeew.dev/api/election/${election?.id}/vote`, 
+        {
+          "party_id": voteParty?.id.toString(),
+          "candidate_id": voteCandidate?.id.toString()
+        }, 
+        {
+          headers: {
+            Authorization:
+              "Token " + JSON.parse(sessionStorage.getItem("userData")).token,
+          },
+        }).then((response) => {
+          window.location.reload();
+          sessionStorage.removeItem('candidate');
+          sessionStorage.removeItem('party');
+        })
+        .catch((error) => {
+          window.alert("Can't Vote");
+        });
+      }
   }
 
   async function handleLogout() {
@@ -38,7 +67,6 @@ function Home() {
         })
         .catch((error) => {
           window.alert("Can't logout");
-          console.log(error);
         });
     }
   }
@@ -52,12 +80,36 @@ function Home() {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        sessionStorage.setItem('voter', JSON.stringify(response.data.result))
+        let user = response.data.result.user
+        setVoter(response.data.result)
+        setVoteStatus(response.data.voted_current_election)
       })
       .catch((error) => {
         window.alert("error");
-        console.log(error);
       });
+  }
+
+  async function getElectionInfo() {
+    await axios.get("https://sankasaint.helloyeew.dev/api/election/latest")
+    .then((response) => {
+      setElection(response.data.election)
+    })
+    .catch((error) => {
+      window.alert(error);
+    });
+  }
+
+  async function getElectionStatus() {
+    await axios.get(`https://sankasaint.helloyeew.dev/api/election/current`)
+      .then((response) => {
+        setElection(response.data.election)
+      })
+      .catch((error) => {
+        getElectionInfo()
+        setElectionEnd(true)
+      });
+
   }
 
   return (
@@ -72,94 +124,221 @@ function Home() {
         >
           Logout
         </button>
-        <h1 className="text-5xl font-medium text-white text-center mt-4">
-          Name Surname
-        </h1>
+        <h1 className="text-5xl font-medium text-white text-center mt-4">Voting System</h1>
       </div>
       <svg width="100%" height="140">
         <ellipse cx="50%" cy="32%" rx="52%" ry="55%" className="fill-green" />
       </svg>
 
-      <div className="grid grid-cols-5 gap-4 my-5 w-[600px] xl:w-[800px] m-auto">
-        <div className="bg-white rounded-lg p-1.5 border border-gray-dark col-span-2">
-          <p>Voter Info</p>
-        </div>
-
-        <div className="bg-white rounded-lg border border-gray-dark col-span-3">
+      <div className="grid grid-cols-11 gap-4 my-5 w-[600px] xl:w-[800px] m-auto">
+        <div className="bg-white rounded-lg border border-gray-dark col-span-7">
           <h1 className="text-xl xl:text-3xl font-semibold p-2 items-center">
-            Donald Trump's Election
+            {election?.name}
           </h1>
           <img
             className="object-cover w-full"
-            src="trump.jpg"
-            alt="donald trump image"
+            src={election?.front_image}
           ></img>
-          <p className="m-3">Make Thailand great again!</p>
+          <p className="m-3">{election?.description}</p>
           <hr className="my-2 h-px bg-gray border-0" />
 
-          <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium">
-            <p className="col-span-3">Vote Candidate</p>
-            <button
-              type="submit"
-              onClick={() => {
-                window.location.assign("/vote-candidate");
-              }}
-              className="bg-green-lime py-0.5 rounded-md hover:brightness-90"
-            >
-              Change
-            </button>
-            <p className="text-green-lime col-span-3 font-normal">
-              Voted for Kim Un Jong
+          <div>
+            {voteCandidate !== null ? (
+              <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium">
+              <p className="col-span-3">Vote Candidate</p>
+              <button
+                type="submit"
+                onClick={() => {
+                  window.location.assign("/vote-candidate");
+                }}
+                className="bg-green-lime py-0.5 rounded-md hover:brightness-90"
+              >
+                Change
+              </button>
+                {voteCandidate.id !== 'no' ? (
+                  <p className="text-green-lime col-span-3 font-normal">
+                      Voting for {voteCandidate?.user?.first_name} {voteCandidate?.user?.last_name}
+                  </p>    
+                ) : (
+                  <p className="text-green-lime col-span-3 font-normal">
+                      Voting for {voteCandidate.id} one
+                  </p>
+                )}
+              <button
+                type="submit"
+                onClick={() => {
+                  window.location.assign("/candidate");
+                }}
+                className="bg-gray py-0.5 font-medium rounded-md hover:brightness-90"
+              >
+                Candidate
+              </button></div>) : (
+                <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium"><p className="col-span-3">Vote Candidate</p>
+                <button
+                  disabled={voteStatus || electionEnd}
+                  type="submit"
+                  onClick={() => {
+                    window.location.assign("/vote-candidate");
+                  }}
+                  className={`py-0.5 rounded-md hover:brightness-90 disabled:cursor-not-allowed ${voteStatus || electionEnd ? "bg-gray" : "bg-yellow-lemon" }`}
+                >
+                  Vote
+                </button>
+                { !voteStatus ? (
+                  !electionEnd ? 
+                    <p className="text-red col-span-3 font-normal">
+                      Vote pending
+                    </p>: <p className="col-span-3" />
+                ) : (
+                  <p className="text-green-lime col-span-3 font-normal">
+                    Already Voted 
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  onClick={() => {
+                    window.location.assign("/candidate");
+                  }}
+                  className={`py-0.5 font-medium rounded-md hover:brightness-90 ${voteStatus || electionEnd ? "bg-yellow-lemon": "bg-gray" }`}
+                >
+                  Candidate
+                </button></div>
+                )}
+          </div>
+          <hr className="my-2 h-px bg-gray border-0" />
+
+          <div>
+            {voteParty !== null ? (
+              <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium">
+              <p className="col-span-3">Vote Party</p>
+              <button
+                type="submit"
+                onClick={() => {
+                  window.location.assign("/vote-party");
+                }}
+                className="bg-green-lime py-0.5 rounded-md hover:brightness-90"
+              >
+                Change
+              </button>
+                {voteParty.id !== 'no' ? (
+                  <p className="text-green-lime col-span-3 font-normal">
+                      Voting for {voteParty?.name}
+                  </p>    
+                ) : (
+                  <p className="text-green-lime col-span-3 font-normal">
+                      Voting for {voteParty.id} one
+                  </p>
+                )}
+              <button
+                type="submit"
+                onClick={() => {
+                  window.location.assign("/party-list");
+                }}
+                className="bg-gray py-0.5 font-medium rounded-md hover:brightness-90"
+              >
+                Candidate
+              </button></div>) :  (
+                <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium">
+                  <p className="col-span-3">Vote Party</p>
+                <button
+                  disabled = {voteStatus || electionEnd}
+                  type="submit"
+                  onClick={() => {
+                    window.location.assign("/vote-party");
+                  }}
+                  className={`py-0.5 rounded-md hover:brightness-90 disabled:cursor-not-allowed ${voteStatus || electionEnd ? "bg-gray" : "bg-yellow-lemon"}`}
+                >
+                  Vote
+                </button>
+                { !voteStatus ? (
+                  !electionEnd ? 
+                  <p className="text-red col-span-3 font-normal">
+                    Vote pending
+                  </p>: <p className="col-span-3" />
+                ) : (
+                  <p className="text-green-lime col-span-3 font-normal">
+                    Already Voted 
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  onClick={() => {
+                    window.location.assign("/party-list");
+                  }}
+                  className={`py-0.5 font-medium rounded-md hover:brightness-90 ${voteStatus || electionEnd ? "bg-yellow-lemon": "bg-gray" }`}
+                >
+                  Party
+                </button></div>
+                )}
+          </div>
+          <hr className="my-2 h-px bg-gray border-0" />
+          
+          {voteParty !== null && voteCandidate !== null ? (
+            <div>
+            <p className="text-green-lime mb-1 text-center font-medium">
+            Please confirm your vote
             </p>
-            <button
-              type="submit"
-              onClick={() => {
-                window.location.assign("/candidate");
-              }}
-              className="bg-gray py-0.5 font-medium rounded-md hover:brightness-90"
-            >
-              Candidate
-            </button>
-          </div>
-          <hr className="my-2 h-px bg-gray border-0" />
-
-          <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium">
-            <p className="col-span-3">Vote Party</p>
-            <button
-              type="submit"
-              onClick={() => {
-                window.location.assign("/vote-party");
-              }}
-              className="bg-yellow-lemon py-0.5 rounded-md hover:brightness-90"
-            >
-              Vote
-            </button>
-            <p className="text-red col-span-3 font-normal">Vote pending</p>
-            <button
-              type="submit"
-              onClick={() => {
-                window.location.assign("/party-list");
-              }}
-              className="bg-gray py-0.5 font-medium rounded-md hover:brightness-90"
-            >
-              Party List
-            </button>
-          </div>
-          <hr className="my-2 h-px bg-gray border-0" />
-
-          <p className="text-red mb-1 text-center font-medium">
-            Only Voted for Candidate
-          </p>
-          <div className="m-1">
+            <div className="m-1">
             <button
               type="submit"
               onClick={() => {
                 handleVote();
               }}
-              className="text-white bg-red rounded-md p-3 w-full text-xl font-medium hover:brightness-90"
+              className="text-white bg-green-lime rounded-md p-3 w-full text-xl font-medium hover:brightness-90"
             >
               Confirm Vote
             </button>
+          </div>
+          </div>
+          ) : (
+            <div>
+            { !voteStatus && !electionEnd && 
+              <p className="text-red mb-1 text-center font-medium">
+                Vote pending
+              </p>}
+            <div className="m-1">
+            {electionEnd ? 
+              <button
+                type="submit"
+                onClick={() => {window.location.assign("/vote-result")}}
+                className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 bg-yellow-lemon text-black`}
+              >Election Result
+              </button>
+              : voteStatus ?
+                <button
+                  type="submit"
+                  disabled
+                  className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 bg-gray text-black cursor-not-allowed `}
+                >Waiting for Election End
+                </button>
+                : <button
+                  type="submit"
+                  disabled={!voteParty || !voteCandidate}
+                  className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 bg-green-lime disabled:bg-red text-black disabled:text-white disabled:cursor-not-allowed `}
+                >Confirm Vote
+                </button>
+            }
+          </div>
+          </div>
+          )}
+        </div>
+
+        <div className="col-span-4">
+          <div className="bg-white rounded-lg p-1.5 border border-gray-dark ">
+            <img
+              className="object-cover rounded-md mb-2 w-full"
+              src={voter?.image}
+            />
+            <div className="grid grid-cols-2 break-words">
+              <b>First Name</b>
+              <p>{voter?.user?.first_name}</p>
+              <b>Last Name</b> 
+              <p>{voter?.user?.last_name}</p>
+              {/* <b>Email</b>
+              <p>{voter?.user?.email}</p> */}
+              <b>Area</b>
+              <p>{voter?.area?.name}</p>
+            </div>
           </div>
         </div>
       </div>

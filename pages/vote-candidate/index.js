@@ -5,21 +5,33 @@ const VoteCandidate = () => {
   const [inputs, setInputs] = useState({});
   const [displayButtons, setDisplayButton] = useState([]);
   const [displayCard, setDisplayCard] = useState({});
+  let [voteParty, setVoteParty] = useState({})
 
   useEffect(() => {
     let user = JSON.parse(sessionStorage.getItem("user"));
-    getCandidateList();
+    let party = JSON.parse(sessionStorage.getItem('party'));
+    let voter = JSON.parse(sessionStorage.getItem('voter'));
+    getCandidateList(voter?.area?.id);
+    setVoteParty(party)
     // if (!user) {
     //   handleRedirect();
     // }
   }, []);
 
-  async function getCandidateList() {
-    await axios.get("https://sankasaint.helloyeew.dev/api/candidate")
+
+
+  function handleRedirect() {
+    if (voteParty === null) {
+      return window.location.replace("/vote-party");
+    } else {
+      return window.location.replace("/home");
+    }
+  }
+
+  async function getCandidateList(voter) {
+    await axios.get(`https://sankasaint.helloyeew.dev/api/area/${voter}`)
       .then((response) => {
-        setDisplayButton(response.data.result);
-        // console.log(response.data.result);
-        // console.log(displayButtons);
+        setDisplayButton(response.data.result.candidates);
       })
       .catch((error) => {
         window.alert(error);
@@ -29,7 +41,9 @@ const VoteCandidate = () => {
   async function handleVote() {
     if (window.confirm(`Voting for ${displayCard.id}?`) === true) {
       // save to session storage
+      sessionStorage.setItem('candidate', JSON.stringify(displayCard))
       window.alert("Vote Completed")
+      handleRedirect()
     }
   }
 
@@ -39,7 +53,6 @@ const VoteCandidate = () => {
     } else {
       setDisplayCard(card);
     }
-    // console.log(displayCard.id);
   }
 
   return (
@@ -58,13 +71,12 @@ const VoteCandidate = () => {
         <div className="grid grid-cols-5 grid-rows-5 gap-4 place-items-center col-span-2 items-start">
           {displayButtons.map((card, index) => {
             return (
-              <div>
+              <div key={card.id}>
                 <button
                   className={`w-14 2xl:w-20 h-14 2xl:h-20 hover:brightness-90 rounded-md text-black ${
                     displayCard.id === card.id ? "bg-yellow" : "bg-gray"
                   }`}
                   onClick={(e) => {
-                    // console.log("card", card.id);
                     handleSelectButton(card);
                   }}
                 >
@@ -94,10 +106,10 @@ const VoteCandidate = () => {
                 {displayCard.id !== "no" ? "Please select candidate to vote": "Choose Vote No"}</p>
 						</div>
 					)}
-					<button type="submit" onClick={() => {handleSelectButton({id: "no"})}}
+					{/* <button type="submit" onClick={() => {handleSelectButton({id: "no"})}}
 						className={`bg-gray py-5 rounded-md text-3xl font-medium text-black hover:brightness-90 ${
 							displayCard.id === "no" ? "bg-yellow" : "bg-gray"
-						}`}>Vote No</button>
+						}`}>Vote No</button> */}
           {displayCard.id !== undefined ? 
             <button type="submit" onClick={() => {handleVote()}} 
               className="py-5 text-3xl font-medium text-white rounded-md hover:brightness-90 bg-green-lime">

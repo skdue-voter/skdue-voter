@@ -5,21 +5,30 @@ const VoteParty = () => {
   const [inputs, setInputs] = useState({});
   const [displayButtons, setDisplayButton] = useState([]);
   const [displayCard, setDisplayCard] = useState({});
+  let [voteCandidate, setVoteCandidate] = useState({})
 
   useEffect(() => {
     let user = JSON.parse(sessionStorage.getItem("user"));
+    let candidate = JSON.parse(sessionStorage.getItem('candidate'));
+    setVoteCandidate(candidate)
     getCandidateList();
     // if (!user) {
     //   handleRedirect();
     // }
   }, []);
 
+  function handleRedirect() {
+    if (voteCandidate === null) {
+      return window.location.replace("/vote-candidate");
+    } else {
+      return window.location.replace("/home");
+    }
+  }
+
   async function getCandidateList() {
     await axios.get("https://sankasaint.helloyeew.dev/api/party")
       .then((response) => {
         setDisplayButton(response.data.party);
-        // console.log(response.data.party);
-        // console.log(displayButtons);
       })
       .catch((error) => {
         window.alert(error);
@@ -29,7 +38,9 @@ const VoteParty = () => {
   async function handleVote() {
     if (window.confirm(`Voting for ${displayCard.id}?`) === true) {
       // save to session storage
+      sessionStorage.setItem('party', JSON.stringify(displayCard))
       window.alert("Vote Completed")
+      handleRedirect()
     }
   }
 
@@ -39,7 +50,6 @@ const VoteParty = () => {
     } else {
       setDisplayCard(card);
     }
-    // console.log(displayCard.id);
   }
 
   return (
@@ -58,13 +68,12 @@ const VoteParty = () => {
         <div className="grid grid-cols-5 grid-rows-5 gap-4 place-items-center col-span-2 items-start">
           {displayButtons.map((card, index) => {
             return (
-              <div>
+              <div key={card.id}>
                 <button
                   className={`w-14 2xl:w-20 h-14 2xl:h-20 hover:brightness-90 rounded-md text-black ${
                     displayCard.id === card.id ? "bg-yellow" : "bg-gray"
                   }`}
                   onClick={(e) => {
-                    // console.log("card", card.id);
                     handleSelectButton(card);
                   }}
                 >
@@ -91,10 +100,10 @@ const VoteParty = () => {
                 {displayCard.id !== "no" ? "Please select party to vote": "Choose Vote No"}</p>
 						</div>
 					)}
-					<button type="submit" onClick={() => {handleSelectButton({id: "no"})}}
+					{/* <button type="submit" onClick={() => {handleSelectButton({id: "no"})}}
 						className={`bg-gray py-5 rounded-md text-3xl font-medium text-black hover:brightness-90 ${
 							displayCard.id === "no" ? "bg-yellow" : "bg-gray"
-						}`}>Vote No</button>
+						}`}>Vote No</button> */}
 					{displayCard.id !== undefined ? 
             <button type="submit" onClick={() => {handleVote()}} 
               className="py-5 text-3xl font-medium text-white rounded-md hover:brightness-90 bg-green-lime">
