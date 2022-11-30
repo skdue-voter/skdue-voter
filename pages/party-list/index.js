@@ -104,6 +104,7 @@ function PartyList() {
           return (
             <div key={index} className="flex flex-row gap-5 ml-8">
               <div
+                name={`${index == 4 ? "main" : "notmain"}`}
                 className={`card flex flex-row rounded-md bg-white max-h-44 cursor-pointer
               ${card == null ? "invisible" : ""}
                  ${
@@ -157,15 +158,15 @@ function PartyList() {
       <div className="flex flex-col items-center justify-center">
         <h1 className="pb-10 text-4xl 2xl:text-5xl font-semibold margin-auto"> Party</h1>
         <div className="bg-party-blue rounded-lg text-white margin-auto grid grid-cols-3 grid-rows-2 w-[600px] 2xl:w-[800px] h-[500px] 2xl:h-[600px] p-2">
-          <img className="object-cover rounded-md h-full w-full" src={mainInfo?.image} />
-          <p className="text-sm 2xl:text-md bg-white text-black row-span-2 col-span-2 rounded-md p-2 ml-2 overflow-auto">
+          <img name="select-img" className="object-cover rounded-md h-full w-full" src={mainInfo?.image} />
+          <p name="select-desc" className="text-sm 2xl:text-md bg-white text-black row-span-2 col-span-2 rounded-md p-2 ml-2 overflow-auto">
             {mainInfo?.description}
           </p>
           <div>
-            <p className="text-xl 2xl:text-3xl font-semibold text-center pt-2 pb-6">
+            <p name="select-name" className="text-xl 2xl:text-3xl font-semibold text-center pt-2 pb-6">
               {mainInfo?.name}
             </p>
-            <p className="font-normal text-sm 2xl:text-md p-2">{mainInfo?.description}</p>
+            <p name="select-quote" className="font-normal text-sm 2xl:text-md p-2">{mainInfo?.quote}</p>
           </div>
         </div>
       </div>
