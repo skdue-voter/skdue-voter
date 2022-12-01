@@ -23,11 +23,17 @@ test.beforeEach(async ({ page }) => {
         page.getByText("Login").click()
     ])
 
-    while(true) {
-        if (await page.locator(':text("First Name") + p').textContent() != "") {
-            break;
+    await page.waitForLoadState('networkidle');
+
+    while (true) {
+        if ((await page.locator(':text("First Name") + p').textContent()) != "") {
+          break;
         }
     }
+
+    page.on('dialog', dialog => {
+        dialog.accept();
+      });
 });
 
 
@@ -40,9 +46,6 @@ test.describe("Chosen vote in home page for not voted user", () => {
 
 
     test("Show proper user infomation", async ({ page }) => {
-        
-        // await page.goto()
-
         const fName = await page.locator(':text("First Name") + p').textContent();
         expect.soft(fName).toEqual(firstName);
 
@@ -55,14 +58,62 @@ test.describe("Chosen vote in home page for not voted user", () => {
 
 
     test("Show two 'vote pending' status", async ({ page }) => {
-
         const firstPending = await page.locator(':text("Vote Candidate") + button + p').textContent();
         expect.soft(firstPending).toEqual("Vote pending")
 
         const secondPending = await page.locator(':text("Vote Party") + button + p').textContent();
         expect.soft(secondPending).toEqual("Vote pending")
-
     });
 
     
+    test("After vote for candidate and party list", async ({ page }) => {
+        await page.locator(':text("Vote Candidate") + button').click();
+        expect.soft(await page.url()).toEqual(baseUrl + "/vote-candidate");
+
+        // choose candidate
+        await page.locator('//*[@id="__next"]/div/div/div[2]/div[1]/div[1]/button').click();
+        await page.waitForLoadState('networkidle');
+        await page.waitForLoadState('domcontentloaded');
+        const candidateName = await page.locator('//*[@id="__next"]/div/div/div[2]/div[2]/div/p[1]').textContent();
+        // console.log(candidateName);
+        await page.locator('//*[@id="__next"]/div/div/div[2]/div[2]/button').click();
+
+        // choose party
+        expect.soft(await page.url()).toEqual(baseUrl + "/vote-party")
+        await page.locator('//*[@id="__next"]/div/div/div[2]/div[1]/div[1]/button').click();
+        await page.waitForLoadState('networkidle');
+        await page.waitForLoadState('domcontentloaded');
+        const partyName = await page.locator('//*[@id="__next"]/div/div/div[2]/div[2]/div/p').textContent();
+        // console.log(partyName);
+        await page.locator('//*[@id="__next"]/div/div/div[2]/div[2]/button').click();
+
+        // console.log(await page.url());
+
+        while (true) {
+            if ((await page.locator(':text("First Name") + p').textContent()) != "") {
+              break;
+            }
+        }
+
+        // voting status
+        expect.soft(await page.locator('//*[@id="__next"]/div/div/div[2]/div[1]/div[1]/div/p[2]').textContent()).toEqual(`Voting for ${candidateName}`);
+        expect.soft(await page.locator('//*[@id="__next"]/div/div/div[2]/div[1]/div[2]/div/p[2]').textContent()).toEqual(`Voting for ${partyName}`);
+
+        // change in button
+        expect.soft(await page.locator('//*[@id="__next"]/div/div/div[2]/div[1]/div[1]/div/button[1]').textContent()).toEqual('Change');
+        expect.soft(await page.locator('//*[@id="__next"]/div/div/div[2]/div[1]/div[2]/div/button[1]').textContent()).toEqual('Change');
+
+        // vote confirmation
+        expect.soft(await page.locator('//*[@id="__next"]/div/div/div[2]/div[1]/div[3]/p').textContent()).toEqual('Please confirm your vote');
+        expect.soft(await page.locator('//*[@id="__next"]/div/div/div[2]/div[1]/div[3]/div/button').textContent()).toEqual('Confirm Vote');
+    });
+
+
+    test("After vote for only candidate", async ({ page }) => {
+    
+    });
+
+    test("After vote for only party", async ({ page }) => {
+
+    });
 })
