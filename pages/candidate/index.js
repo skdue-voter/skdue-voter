@@ -11,7 +11,6 @@ function Candidate() {
 
   const handleCandidateChange = (event) => {
     const index = event.target.value;
-    // console.log(index);
     setMainIndex(index);
     changeCards(index);
   };
@@ -30,10 +29,8 @@ function Candidate() {
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res);
       })
       .catch((e) => {
-        console.log(e);
       });
 
     // handleRedirect();
@@ -47,10 +44,8 @@ function Candidate() {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("logout success", res);
       })
       .catch((e) => {
-        console.log(e);
       });
     // handleRedirect();
   }
@@ -64,7 +59,6 @@ function Candidate() {
     axios
       .get(`https://sankasaint.helloyeew.dev/api/candidate`)
       .then((res) => {
-        // console.log(res.data.result);
         let data = res.data.result;
         setCards(data);
         setDisplayCards([
@@ -81,7 +75,6 @@ function Candidate() {
         setMainInfo(data[0]);
       })
       .catch((e) => {
-        console.log(e);
       });
   }
 
@@ -140,6 +133,7 @@ function Candidate() {
           return (
             <div key={index} className="flex flex-row gap-5 ml-8">
               <div
+                name={`${index == 4 ? "main" : "notmain"}`}
                 className={`card flex flex-row rounded-md bg-white max-h-44 cursor-pointer
               ${card == null ? "invisible" : ""}
                  ${
@@ -165,7 +159,6 @@ function Candidate() {
               
               `}
                 onClick={(e) => {
-                  // console.log("card", id - 1);
                   setMainIndex(id - 1);
                   changeCards(id - 1);
                 }}
@@ -196,8 +189,9 @@ function Candidate() {
         <h1 className="pb-10 text-5xl font-semibold">Candidate</h1>
         <div className="bg-party-blue rounded-lg pb-2 text-white w-[300px] 2xl:w-[400px] p-2">
           <img
+            name="select-img"
             className="object-cover rounded-md h-[13rem] 2xl:h-[17rem] w-full"
-            src={mainInfo?.image} 
+            src={mainInfo?.image}
           />
           <p className="text-xl 2xl:text-2xl font-bold dark:text-white text-center pt-2">
             {mainInfo?.id +
@@ -206,9 +200,12 @@ function Candidate() {
               " " +
               mainInfo?.user?.last_name}
           </p>
-          <p className="text-md 2xl:text-xl dark:text-white text-center pb-2">{mainInfo?.party?.name}</p>
-          <p className="p-2 text-sm 2xl:text-lg bg-white text-black rounded-md h-[13rem] 2xl:h-[17rem] overflow-auto">
-            {mainInfo?.description}</p>
+          <p className="text-md 2xl:text-xl dark:text-white text-center pb-2">
+            {mainInfo?.party?.name}
+          </p>
+          <p name='select-desc' className="p-2 text-sm 2xl:text-lg bg-white text-black rounded-md h-[13rem] 2xl:h-[17rem] overflow-auto">
+            {mainInfo?.description}
+          </p>
         </div>
       </div>
     </div>

@@ -22,7 +22,6 @@ const VoteResult = () => {
         setArea(response.data.result);
       })
       .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -32,7 +31,6 @@ const VoteResult = () => {
         setCandidateList(response.data.vote_result);
       })
       .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -42,7 +40,6 @@ const VoteResult = () => {
         setPartyList(response.data.vote_result);
       })
       .catch((error) => {
-        console.log(error);
       });
   }
 
@@ -86,7 +83,7 @@ const VoteResult = () => {
       {selectType == 0 && <div className="flex bg-white rounded-lg border border-gray-dark p-1 w-[50rem] m-auto mt-4">
         <p className="my-2 mx-4 text-xl font-semibold">Area</p>
         <select value={selectArea} onChange={handleSelectArea} className="bg-gray text-sm rounded-md w-20 p-2 cursor-pointer">
-          {area.map((area, index) => { return (<option>{area.id}</option>) })}
+          {area.map((area, index) => { return (<option key={area.id}>{area.id}</option>) })}
         </select>
         <p className="my-2 mx-4 text-xl">{candidateList[0] && candidateList[0].candidate.area.name}</p>
       </div>}
@@ -94,7 +91,7 @@ const VoteResult = () => {
       <div className="grid grid-cols-1 gap-4 m-auto my-4 w-[50rem] h-[36rem] overflow-auto">
         {selectType === 0 ? candidateList.map((data, index) => {
           return (
-            <div className="flex bg-white rounded-lg border border-gray-dark">
+            <div key={data.candidate.id} className="flex bg-white rounded-lg border border-gray-dark">
               <p className="flex-none rounded-l-lg text-center px-2 pt-2 font-semibold text-xl text-white bg-green">
                 {data.vote_count}</p>
               <img
@@ -111,7 +108,7 @@ const VoteResult = () => {
             </div>
           )}) : partyList.map((data, index) => {
             return (
-              <div className="flex bg-white rounded-lg border border-gray-dark">
+              <div key={data.party.id} className="flex bg-white rounded-lg border border-gray-dark">
                 <p className="flex-none rounded-l-lg text-center px-2 pt-2 font-semibold text-xl text-white bg-green">
                   {data.real_result}</p>
                 <img

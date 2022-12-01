@@ -8,6 +8,7 @@ function Home() {
   let [election, setElection] = useState({})
   let [voteCandidate, setVoteCandidate] = useState({})
   let [voteParty, setVoteParty] = useState({})
+  let [electionEnd, setElectionEnd] = useState(false);
 
   useEffect(() => {
     // get user data from session storage for voting function
@@ -21,7 +22,7 @@ function Home() {
       window.location.replace("/");
     }
     getUserInfo();
-    getElectionInfo();
+    getElectionStatus();
   }, []);
 
   async function handleVote() {
@@ -47,7 +48,6 @@ function Home() {
         })
         .catch((error) => {
           window.alert("Can't Vote");
-          console.log(error);
         });
       }
   }
@@ -67,7 +67,6 @@ function Home() {
         })
         .catch((error) => {
           window.alert("Can't logout");
-          console.log(error);
         });
     }
   }
@@ -88,18 +87,29 @@ function Home() {
       })
       .catch((error) => {
         window.alert("error");
-        console.log(error);
       });
   }
 
   async function getElectionInfo() {
-    await axios.get("https://sankasaint.helloyeew.dev/api/election/current")
+    await axios.get("https://sankasaint.helloyeew.dev/api/election/latest")
     .then((response) => {
       setElection(response.data.election)
     })
     .catch((error) => {
       window.alert(error);
     });
+  }
+
+  async function getElectionStatus() {
+    await axios.get(`https://sankasaint.helloyeew.dev/api/election/current`)
+      .then((response) => {
+        setElection(response.data.election)
+      })
+      .catch((error) => {
+        getElectionInfo()
+        setElectionEnd(true)
+      });
+
   }
 
   return (
@@ -165,19 +175,20 @@ function Home() {
               </button></div>) : (
                 <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium"><p className="col-span-3">Vote Candidate</p>
                 <button
-                  disabled={voteStatus}
+                  disabled={voteStatus || electionEnd}
                   type="submit"
                   onClick={() => {
                     window.location.assign("/vote-candidate");
                   }}
-                  className={`py-0.5 rounded-md hover:brightness-90 disabled:cursor-not-allowed ${voteStatus ? "bg-gray" : "bg-yellow-lemon"}`}
+                  className={`py-0.5 rounded-md hover:brightness-90 disabled:cursor-not-allowed ${voteStatus || electionEnd ? "bg-gray" : "bg-yellow-lemon" }`}
                 >
                   Vote
                 </button>
                 { !voteStatus ? (
-                  <p className="text-red col-span-3 font-normal">
-                    Vote pending
-                  </p>
+                  !electionEnd ? 
+                    <p className="text-red col-span-3 font-normal">
+                      Vote pending
+                    </p>: <p className="col-span-3" />
                 ) : (
                   <p className="text-green-lime col-span-3 font-normal">
                     Already Voted 
@@ -188,7 +199,7 @@ function Home() {
                   onClick={() => {
                     window.location.assign("/candidate");
                   }}
-                  className={`py-0.5 font-medium rounded-md hover:brightness-90 ${!voteStatus ? "bg-gray" : "bg-yellow-lemon"}`}
+                  className={`py-0.5 font-medium rounded-md hover:brightness-90 ${voteStatus || electionEnd ? "bg-yellow-lemon": "bg-gray" }`}
                 >
                   Candidate
                 </button></div>
@@ -230,19 +241,20 @@ function Home() {
                 <div className="grid grid-cols-4 grid-rows-2 gap-1.5 px-2 text-md xl:text-lg font-medium">
                   <p className="col-span-3">Vote Party</p>
                 <button
-                  disabled = {voteStatus}
+                  disabled = {voteStatus || electionEnd}
                   type="submit"
                   onClick={() => {
                     window.location.assign("/vote-party");
                   }}
-                  className={`py-0.5 rounded-md hover:brightness-90 disabled:cursor-not-allowed ${voteStatus ? "bg-gray" : "bg-yellow-lemon"}`}
+                  className={`py-0.5 rounded-md hover:brightness-90 disabled:cursor-not-allowed ${voteStatus || electionEnd ? "bg-gray" : "bg-yellow-lemon"}`}
                 >
                   Vote
                 </button>
                 { !voteStatus ? (
+                  !electionEnd ? 
                   <p className="text-red col-span-3 font-normal">
                     Vote pending
-                  </p>
+                  </p>: <p className="col-span-3" />
                 ) : (
                   <p className="text-green-lime col-span-3 font-normal">
                     Already Voted 
@@ -253,7 +265,7 @@ function Home() {
                   onClick={() => {
                     window.location.assign("/party-list");
                   }}
-                  className={`py-0.5 font-medium rounded-md hover:brightness-90 ${!voteStatus ? "bg-gray" : "bg-yellow-lemon"}`}
+                  className={`py-0.5 font-medium rounded-md hover:brightness-90 ${voteStatus || electionEnd ? "bg-yellow-lemon": "bg-gray" }`}
                 >
                   Party
                 </button></div>
@@ -261,7 +273,7 @@ function Home() {
           </div>
           <hr className="my-2 h-px bg-gray border-0" />
           
-          {voteParty !== null || voteCandidate !== null ? (
+          {voteParty !== null && voteCandidate !== null ? (
             <div>
             <p className="text-green-lime mb-1 text-center font-medium">
             Please confirm your vote
@@ -280,30 +292,32 @@ function Home() {
           </div>
           ) : (
             <div>
-            { !voteStatus && 
+            { !voteStatus && !electionEnd && 
               <p className="text-red mb-1 text-center font-medium">
                 Vote pending
               </p>}
             <div className="m-1">
-            {!voteStatus ? <button
-              type="submit"
-              onClick={() => {
-                handleVote();
-              }}
-              className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 ${voteStatus ? "bg-gray text-black": "bg-red text-white"}`}
-            >
-              Confirm Vote
-            </button>
-            :
-            <button
-              disabled = {Object.keys(election).length !== 0}
-              type="submit"
-              onClick={() => {
-                window.location.assign("/vote-result");
-              }}
-              className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 bg-yellow-lemon disabled:bg-gray text-black disabled:cursor-not-allowed `}
-            >{election ? "Waiting for Election End": "Election Result"}
-          </button>}
+            {electionEnd ? 
+              <button
+                type="submit"
+                onClick={() => {window.location.assign("/vote-result")}}
+                className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 bg-yellow-lemon text-black`}
+              >Election Result
+              </button>
+              : voteStatus ?
+                <button
+                  type="submit"
+                  disabled
+                  className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 bg-gray text-black cursor-not-allowed `}
+                >Waiting for Election End
+                </button>
+                : <button
+                  type="submit"
+                  disabled={!voteParty || !voteCandidate}
+                  className={`rounded-md p-3 w-full text-xl font-medium hover:brightness-90 bg-green-lime disabled:bg-red text-black disabled:text-white disabled:cursor-not-allowed `}
+                >Confirm Vote
+                </button>
+            }
           </div>
           </div>
           )}

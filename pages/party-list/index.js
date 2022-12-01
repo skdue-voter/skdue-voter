@@ -11,7 +11,6 @@ function PartyList() {
 
   useEffect(() => {
     setLen(cards.length);
-    // console.log("set length", len);
   }, [cards]);
 
   useEffect(() => {
@@ -22,7 +21,6 @@ function PartyList() {
     axios
       .get(`https://sankasaint.helloyeew.dev/api/party`)
       .then((res) => {
-        // console.log(res.data.party);
         let data = res.data.party;
         setCards(data);
         setDisplayCards([
@@ -39,7 +37,6 @@ function PartyList() {
         setMainInfo(data[0]);
       })
       .catch((e) => {
-        // console.log(e);
       });
   }
 
@@ -129,7 +126,6 @@ function PartyList() {
               
               `}
                 onClick={(e) => {
-                  // console.log("card", id - 1);
                   setMainIndex(id - 1);
                   changeCards(id - 1);
                 }}

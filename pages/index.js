@@ -17,13 +17,9 @@ const Login = () => {
   async function getVoteResult() {
     await axios.get(`https://sankasaint.helloyeew.dev/api/election/current`)
       .then((response) => {
-        // console.log(response.data.vote_result);
-        if  (Object.keys(response.data.vote_result).length === 0) {
-          setElectionEnd(true)
-        }
       })
       .catch((error) => {
-        // console.log(error);
+        setElectionEnd(true)
       });
   }
 
