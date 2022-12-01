@@ -73,6 +73,7 @@ const VoteCandidate = () => {
             return (
               <div key={card.id}>
                 <button
+                  name="candidateButton"
                   className={`w-14 2xl:w-20 h-14 2xl:h-20 hover:brightness-90 rounded-md text-black ${
                     displayCard.id === card.id ? "bg-yellow" : "bg-gray"
                   }`}
