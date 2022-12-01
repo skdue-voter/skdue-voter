@@ -3,7 +3,7 @@ const { test, expect } = require("@playwright/test");
 const { default: axios, Axios } = require("axios");
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("http://localhost:3000/candidate");
+  await page.goto("/candidate");
 });
 
 test.describe("Candidate Page", () => {
@@ -11,7 +11,7 @@ test.describe("Candidate Page", () => {
     await expect(page.getByText("Candidate")).toBeVisible();
     await expect(page.getByText("Back")).toBeVisible();
 
-    let name = (await page.locator(`[name='main']`).textContent()) || "FUCK";
+    let name = (await page.locator(`[name='main']`).textContent()) || "test";
     name = name.replace(/[0-9]/g, "");
     name = name.split(" ")[0];
     console.log(name);
@@ -25,6 +25,13 @@ test.describe("Candidate Page", () => {
     let i = 1;
     while (true) {
       let num = i.toString();
+      //*[@id="__next"]/div/div/div[2]/div[5]/div[1]
+      console.log(
+        num,
+        await page
+          .locator(`//*[@id="__next"]/div/div/div[2]/div[5]/div[1]`)
+          .textContent()
+      );
       if ((await page.locator(`span`, { hasText: num }).isVisible()) == false) {
         i -= 1;
         break;
