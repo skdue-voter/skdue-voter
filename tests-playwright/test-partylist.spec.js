@@ -14,7 +14,7 @@ test.describe("Party-list Page", () => {
     await expect(page.getByText("Party")).toBeVisible();
     await expect(page.getByText("Back")).toBeVisible();
 
-    let name = (await page.locator(`//*[@id="__next"]/div/div/div[2]/div[5]/div[1]/p`).textContent()) || "FUCK";
+    let name = (await page.locator(`//*[@id="__next"]/div/div/div[2]/div[5]/div[1]/p`).textContent()) || "test";
     console.log(name);
 
     await page.goto(api_url);
