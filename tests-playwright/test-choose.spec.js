@@ -22,6 +22,12 @@ test.beforeEach(async ({ page }) => {
         // login
         page.getByText("Login").click()
     ])
+
+    while(true) {
+        if (await page.locator(':text("First Name") + p').textContent() != "") {
+            break;
+        }
+    }
 });
 
 
@@ -35,6 +41,8 @@ test.describe("Chosen vote in home page for not voted user", () => {
 
     test("Show proper user infomation", async ({ page }) => {
         
+        // await page.goto()
+
         const fName = await page.locator(':text("First Name") + p').textContent();
         expect.soft(fName).toEqual(firstName);
 
@@ -49,10 +57,10 @@ test.describe("Chosen vote in home page for not voted user", () => {
     test("Show two 'vote pending' status", async ({ page }) => {
 
         const firstPending = await page.locator(':text("Vote Candidate") + button + p').textContent();
-        expect.soft(firstPending).toEqual("Vote Pending")
+        expect.soft(firstPending).toEqual("Vote pending")
 
         const secondPending = await page.locator(':text("Vote Party") + button + p').textContent();
-        expect.soft(secondPending).toEqual("Vote Pending")
+        expect.soft(secondPending).toEqual("Vote pending")
 
     });
 
