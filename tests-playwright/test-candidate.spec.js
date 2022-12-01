@@ -8,10 +8,7 @@ test.beforeEach(async ({ page }) => {
 
 test.describe("Candidate Page", () => {
   test("Check first number name in api", async ({ page }) => {
-    await expect(page.getByText("Candidate")).toBeVisible();
-    await expect(page.getByText("Back")).toBeVisible();
-
-    let name = (await page.locator(`[name='main']`).textContent()) || "FUCK";
+    let name = (await page.locator(`[name='main']`).textContent()) || "test";
     name = name.replace(/[0-9]/g, "");
     name = name.split(" ")[0];
     console.log(name);
