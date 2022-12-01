@@ -28,9 +28,6 @@ test.describe("Result Page", () => {
     // Expect party button to be visible
     await expect.soft(page.locator('//*[@id="__next"]/div/div/div[2]/button[2]')).toBeVisible();
     page.locator('//*[@id="__next"]/div/div/div[2]/button[2]').click();
-    // Expect area select to be empty
-    await expect.soft(page.locator('//*[@id="__next"]/div/div/div[3]/select')).toBeEmpty();
-
     // get all party name in web page
     let name = (await page.locator(`//*[@id="__next"]/div/div/div[3]/div[1]/div/p[1]`).textContent()) || "null";
     name = name.replace(/[0-9]/g, "");

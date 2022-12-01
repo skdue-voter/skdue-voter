@@ -46,7 +46,7 @@ test.describe("Login page", () => {
     const [response] = await Promise.all([
       // Waits for the main frame navigation and returns the main resource response
       page.waitForNavigation({url: 'http://localhost:3000/home'}),
-      // Press Enter on Login button
+      // Press Enter on Login form
       page.getByText("Login").press("Enter"),
     ]);
   });
