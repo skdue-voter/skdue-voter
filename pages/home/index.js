@@ -82,6 +82,7 @@ function Home() {
       .then((response) => {
         sessionStorage.setItem('voter', JSON.stringify(response.data.result))
         let user = response.data.result.user
+        console.log(response.data.result)
         setVoter(response.data.result)
         setVoteStatus(response.data.voted_current_election)
       })
