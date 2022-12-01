@@ -36,4 +36,18 @@ test.describe("Login page", () => {
     // Press Enter on Login button
     await page.getByText("Login").press("Enter");
   });
+
+  test("Test on valid login", async ({ page }) => {
+
+    // Type into the citizenID and CVV field
+    await page.locator("[name=username]").type("579337567744");
+    await page.locator("[name=password]").type("BV2-2703382-60");
+
+    const [response] = await Promise.all([
+      // Waits for the main frame navigation and returns the main resource response
+      page.waitForNavigation({url: 'http://localhost:3000/home'}),
+      // Press Enter on Login form
+      page.getByText("Login").press("Enter"),
+    ]);
+  });
 });
